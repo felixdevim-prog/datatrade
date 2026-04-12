@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap: Data Analyst + Algo Trader</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0A0A0F;--card:#111119;--border:#1e1e2e;
+--text:#e8e8ed;--muted:#6b6b80;
+--cyan:#00D4E8;--purple:#A855F7;--amber:#F59E0B;
+--green:#10B981;--red:#EF4444;--blue:#3B82F6;--gold:#CA8A04;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* HEADER */
+.header{text-align:center;padding:40px 20px 30px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0F0F1A,var(--bg))}
+.header .tag{font-size:9px;letter-spacing:5px;color:var(--muted);font-weight:700;margin-bottom:16px}
+.header h1{font-size:clamp(24px,5vw,36px);font-weight:800;letter-spacing:-1px;line-height:1.15}
+.header h1 .blue{color:var(--blue)}
+.header h1 .red{color:var(--red)}
+.header p{font-size:13px;color:var(--muted);max-width:420px;margin:10px auto 0}
+
+/* VENN */
+.venn{display:flex;align-items:center;justify-content:center;margin:24px auto 0}
+.venn-circle{width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.venn-left{background:rgba(239,68,68,.12);border:1.5px solid rgba(239,68,68,.3);margin-right:-18px;z-index:1}
+.venn-center{background:rgba(255,215,0,.15);border:1.5px solid rgba(255,215,0,.4);z-index:2;width:62px;height:62px}
+.venn-right{background:rgba(59,130,246,.12);border:1.5px solid rgba(59,130,246,.3);margin-left:-18px;z-index:1}
+.venn-label{font-size:10px;font-weight:700}
+.venn-pct{font-size:18px;font-weight:800;color:var(--gold)}
+
+/* FILTERS */
+.filters{display:flex;gap:6px;padding:16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.filters::-webkit-scrollbar{display:none}
+.filter-btn{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;transition:.2s}
+.filter-btn.active{border-color:var(--filter-color,#888);background:color-mix(in srgb,var(--filter-color,#888) 10%,transparent);color:var(--filter-color,#888)}
+
+/* PHASE TABS */
+.phase-tabs{display:flex;gap:6px;padding:0 16px 16px;overflow-x:auto}
+.phase-tabs::-webkit-scrollbar{display:none}
+.phase-tab{padding:6px 14px;border-radius:8px;font-size:11px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;transition:.2s}
+.phase-tab.active{border-color:var(--tab-color,#888);background:color-mix(in srgb,var(--tab-color,#888) 10%,transparent);color:var(--tab-color,#888)}
+
+/* SKILL CARDS */
+.skills-list{padding:0 16px 20px;display:flex;flex-direction:column;gap:10px}
+.skill-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;transition:.3s}
+.skill-card.open{border-color:var(--phase-color,var(--cyan));box-shadow:0 0 25px color-mix(in srgb,var(--phase-color,var(--cyan)) 8%,transparent)}
+.skill-header{width:100%;display:flex;align-items:center;gap:12px;padding:16px;background:transparent;border:none;cursor:pointer;color:var(--text);text-align:left}
+.skill-icon{font-size:26px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--phase-color,var(--cyan)) 8%,transparent);border-radius:10px;flex-shrink:0}
+.skill-info{flex:1;min-width:0}
+.skill-name{font-size:15px;font-weight:700}
+.skill-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.badge{font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:4px}
+.badge-dual{background:rgba(202,138,4,.1);color:var(--gold);border:1px solid rgba(202,138,4,.2)}
+.badge-trader{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+.badge-analyst{background:rgba(59,130,246,.1);color:var(--blue);border:1px solid rgba(59,130,246,.2)}
+.badge-weeks{background:color-mix(in srgb,var(--phase-color,var(--cyan)) 8%,transparent);color:var(--phase-color,var(--cyan));border:1px solid color-mix(in srgb,var(--phase-color,var(--cyan)) 20%,transparent)}
+.skill-toggle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--phase-color,var(--cyan));font-size:20px;font-weight:300;transition:transform .3s;background:color-mix(in srgb,var(--phase-color,var(--cyan)) 10%,transparent)}
+.skill-card.open .skill-toggle{transform:rotate(45deg)}
+
+/* SKILL CONTENT */
+.skill-content{padding:0 16px 18px;display:none}
+.skill-card.open .skill-content{display:block}
+.skill-desc{font-size:13.5px;color:#a0a0b0;line-height:1.6;margin-bottom:14px}
+.use-cases{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.use-case{border-radius:10px;padding:10px 12px}
+.use-trader{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15)}
+.use-analyst{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15)}
+.use-label{font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:4px}
+.use-text{font-size:12px;color:#b0b0b8;line-height:1.5}
+
+/* CONTENT BLOCKS */
+.content-block{border-left:3px solid var(--block-color,var(--cyan));border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:10px}
+.block-learn{background:rgba(0,212,232,.05);--block-color:var(--cyan)}
+.block-prompt{background:rgba(168,85,247,.06);--block-color:var(--purple)}
+.block-resource{background:rgba(245,158,11,.06);--block-color:var(--amber)}
+.block-project{background:rgba(16,185,129,.06);--block-color:var(--green)}
+.block-label{font-size:9px;font-weight:700;letter-spacing:1.5px;margin-bottom:6px;color:var(--block-color)}
+.block-text{font-size:13px;line-height:1.7;color:#d0d0d8;white-space:pre-wrap}
+.block-prompt .block-text{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,.25);padding:12px;border-radius:8px;font-size:12px;margin-top:4px}
+
+/* SALARY */
+.salary-toggle{width:100%;padding:16px;border-radius:14px;background:var(--card);border:1px solid var(--border);color:var(--text);cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center}
+.salary-title{font-size:15px;font-weight:700}
+.salary-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.salary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;display:none}
+.salary-grid.open{display:grid}
+.salary-col{background:var(--card);border-radius:12px;padding:16px}
+.salary-col-analyst{border:1px solid rgba(59,130,246,.2)}
+.salary-col-trader{border:1px solid rgba(239,68,68,.2)}
+.salary-col-title{font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:12px}
+.salary-item{margin-bottom:10px}
+.salary-role{font-size:12px;font-weight:600}
+.salary-range{font-size:14px;font-weight:700}
+.salary-time{font-size:10px;color:var(--muted)}
+
+/* FOOTER */
+.footer{padding:20px 16px 40px;border-top:1px solid var(--border);text-align:center}
+.footer .tag{font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:10px}
+.footer p{font-size:14px;color:#a0a0b0;line-height:1.7;max-width:500px;margin:0 auto}
+.footer strong{color:var(--gold)}
+
+@media(max-width:500px){
+  .use-cases{grid-template-columns:1fr}
+  .salary-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="tag mono">DUAL PATH ROADMAP · 2026</div>
+  <h1><span class="blue">Data Analyst</span> + <span class="red">Algo Trader</span></h1>
+  <p>Un camino, dos carreras. ~60% de las skills se comparten entre ambos.</p>
+  <div class="venn">
+    <div class="venn-circle venn-left"><span class="venn-label" style="color:var(--red)">TRADER</span></div>
+    <div class="venn-circle venn-center"><span class="venn-pct">60%</span></div>
+    <div class="venn-circle venn-right"><span class="venn-label" style="color:var(--blue)">ANALISTA</span></div>
+  </div>
+</div>
+
+<div class="filters" id="filters"></div>
+<div class="phase-tabs" id="phaseTabs"></div>
+<div class="skills-list" id="skillsList"></div>
+
+<div style="padding:0 16px 30px">
+  <button class="salary-toggle" onclick="toggleSalary()">
+    <div><div class="salary-title">💰 Proyección de Ingresos</div><div class="salary-sub">Ambos caminos comparados</div></div>
+    <span id="salaryIcon" style="color:#888;font-size:18px;transition:transform .3s">+</span>
+  </button>
+  <div class="salary-grid" id="salaryGrid">
+    <div class="salary-col salary-col-analyst">
+      <div class="salary-col-title mono" style="color:var(--blue)">💼 DATA ANALYST</div>
+      <div class="salary-item"><div class="salary-role">Data Analyst Junior</div><div class="salary-range" style="color:var(--blue)">$35K - $55K</div><div class="salary-time">6-9 meses de estudio</div></div>
+      <div class="salary-item"><div class="salary-role">Data Analyst Mid</div><div class="salary-range" style="color:var(--blue)">$55K - $80K</div><div class="salary-time">1-2 años de experiencia</div></div>
+      <div class="salary-item"><div class="salary-role">Data Analyst Senior</div><div class="salary-range" style="color:var(--blue)">$80K - $110K</div><div class="salary-time">3-5 años</div></div>
+      <div class="salary-item"><div class="salary-role">Data Scientist</div><div class="salary-range" style="color:var(--blue)">$90K - $140K</div><div class="salary-time">Con ML avanzado</div></div>
+      <div class="salary-item"><div class="salary-role">Analytics Engineer</div><div class="salary-range" style="color:var(--blue)">$100K - $150K</div><div class="salary-time">SQL + Python + dbt</div></div>
+    </div>
+    <div class="salary-col salary-col-trader">
+      <div class="salary-col-title mono" style="color:var(--red)">📈 ALGO TRADER</div>
+      <div class="salary-item"><div class="salary-role">Paper Trading</div><div class="salary-range" style="color:var(--red)">$0</div><div class="salary-time">Meses 1-3</div></div>
+      <div class="salary-item"><div class="salary-role">Micro Contratos</div><div class="salary-range" style="color:var(--red)">Variable</div><div class="salary-time">Meses 4-6</div></div>
+      <div class="salary-item"><div class="salary-role">Consistencia</div><div class="salary-range" style="color:var(--red)">$1K-5K/mes</div><div class="salary-time">6-12 meses</div></div>
+      <div class="salary-item"><div class="salary-role">Escalado</div><div class="salary-range" style="color:var(--red)">$5K-20K/mes</div><div class="salary-time">1-2 años</div></div>
+      <div class="salary-item"><div class="salary-role">Prop Firm Funded</div><div class="salary-range" style="color:var(--red)">$50K-200K capital</div><div class="salary-time">Con track record</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="tag mono">LA VERDAD</div>
+  <p>El camino de Data Analyst tiene ingreso predecible desde el mes 6-9. El trading algorítmico puede tardar 1-2 años en ser rentable. Estudiar ambos no es el doble de trabajo — es <strong>un 30% más</strong>, porque las skills core son las mismas. Y si uno falla, el otro te sostiene.</p>
+</div>
+
+<script>
+const SKILLS = [
+  {id:"python",phase:1,title:"Python Fundamentos",weeks:"Sem 1-3",icon:"🐍",trader:true,analyst:true,overlap:true,
+   desc:"La base de TODO. Tanto el analista de datos como el trader algorítmico viven en Python.",
+   traderUse:"Descargar datos de mercado, calcular indicadores, backtesting, conectar APIs de brokers.",
+   analystUse:"Limpiar datasets, automatizar reportes, conectar bases de datos, ETL pipelines.",
+   blocks:[
+     {type:"learn",label:"📖 QUÉ APRENDER",text:"1. Variables, tipos de datos (int, float, string, bool)\n2. Listas, diccionarios, tuplas\n3. Loops (for, while) y condicionales (if/elif/else)\n4. Funciones: definir, parámetros, return\n5. Manejo de archivos (abrir CSV, leer JSON)\n6. Manejo de errores (try/except)\n7. List comprehensions\n8. Clases básicas (POO)"},
+     {type:"prompt",label:"🤖 PROMPT IA",text:`"Enséñame Python con ejemplos prácticos de datos financieros. Para cada concepto (variables, listas, loops, funciones), usa ejemplos como: calcular el retorno de una acción, crear una lista de precios, iterar sobre datos de cierre diario. Dame 3 ejercicios por concepto, de fácil a difícil."`},
+     {type:"resource",label:"🔗 RECURSOS GRATIS",text:"• Python.org tutorial oficial (docs.python.org/3/tutorial)\n• Google Colab — IDE en la nube, 0 instalación\n• freeCodeCamp Python (YouTube, 12hrs)\n• Kaggle Learn Python (kaggle.com/learn/python)"},
+     {type:"project",label:"🏆 PROYECTO VALIDADOR",text:"Crea un script que: descargue precios de Bitcoin del último año, calcule el retorno diario, encuentre el mejor y peor día, y exporte los resultados a CSV."}
+   ]},
+  {id:"pandas",phase:1,title:"Pandas & NumPy",weeks:"Sem 3-5",icon:"🐼",trader:true,analyst:true,overlap:true,
+   desc:"Pandas es a los datos lo que Excel es a las hojas de cálculo — pero 1000x más poderoso.",
+   traderUse:"Manipular series de precios, calcular indicadores técnicos, preparar datos para backtesting.",
+   analystUse:"Limpiar datos sucios, merge de datasets, pivot tables, análisis exploratorio (EDA).",
+   blocks:[
+     {type:"learn",label:"📖 QUÉ APRENDER",text:"1. DataFrames: crear, indexar, filtrar, seleccionar columnas\n2. Operaciones: groupby, merge, join, concat, pivot_table\n3. Limpieza: missing values, duplicados, tipos de datos\n4. Datetime: parsear fechas, resample, rolling windows\n5. NumPy: arrays, operaciones vectorizadas, estadísticas\n6. Apply/Map para transformaciones custom\n7. Lectura/escritura: CSV, Excel, JSON, SQL"},
+     {type:"prompt",label:"🤖 PROMPT IA",text:`"Dame 10 ejercicios de Pandas que sirvan tanto para análisis de datos como para trading. Para cada ejercicio, muestra la versión 'analista' y la versión 'trader'. Ej: Rolling mean de 20 periodos en ventas Y en precios."`},
+     {type:"resource",label:"🔗 RECURSOS GRATIS",text:"• Kaggle Learn Pandas (kaggle.com/learn/pandas)\n• Pandas official 10min guide\n• Corey Schafer Pandas Tutorial (YouTube)"},
+     {type:"project",label:"🏆 PROYECTO VALIDADOR",text:"TRADER: Descarga 2 años de datos de ES futures, calcula EMA 9/21, RSI 14, ATR 14.\nANALISTA: Descarga un dataset de Kaggle, limpia datos faltantes, genera resumen estadístico."}
+   ]},
+  {id:"viz",phase:2,title:"Visualización de Datos",weeks:"Sem 5-7",icon:"📊",trader:true,analyst:true,overlap:true,
+   desc:"Si no puedes visualizar datos, no puedes analizarlos ni comunicar hallazgos.",
+   traderUse:"Equity curves, drawdowns, distribución de trades, heatmaps de rendimiento.",
+   analystUse:"Dashboards, reportes visuales, storytelling con datos, presentaciones.",
+   blocks:[
+     {type:"learn",label:"📖 QUÉ APRENDER",text:"1. Matplotlib: línea, barras, histogramas, scatter, subplots\n2. Seaborn: heatmaps, boxplots, violin plots\n3. Plotly: gráficos interactivos (candlestick charts)\n4. Principios de visualización y storytelling\n5. Dashboards básicos con Streamlit"},
+     {type:"prompt",label:"🤖 PROMPT IA",text:`"Crea un notebook Python con 8 visualizaciones profesionales usando datos financieros: candlestick interactivo, equity curve con drawdown, heatmap de retornos por mes/año, distribución de retornos, scatter volumen vs movimiento, bar chart por día de semana, box plot por sesión, dashboard combinado."`},
+     {type:"resource",label:"🔗 RECURSOS GRATIS",text:"• Python Graph Gallery (python-graph-gallery.com)\n• Streamlit docs (streamlit.io)"},
+     {type:"project",label:"🏆 PROYECTO VALIDADOR",text:"Crea un dashboard en Streamlit con KPIs, 3 gráficos interactivos, y filtros. Va directo a tu portfolio."}
+   ]},
+  {id:"stats",phase:2,title:"Estadística & Probabilidad",weeks:"Sem 7-9",icon:"🎲",trader:true,analyst:true,overlap:true,
+   desc:"Sin estadística no puedes saber si tu estrategia tiene edge real o es pura suerte.",
+   traderUse:"Validar si una estrategia es rentable por skill o por azar.",
+   analystUse:"Hypothesis testing, A/B testing, correlaciones, regresión.",
+   blocks:[
+     {type:"learn",label:"📖 QUÉ APRENDER",text:"1. Estadística descriptiva: media, mediana, desviación estándar\n2. Distribuciones: normal, log-normal\n3. Correlación vs causalidad\n4. Hypothesis testing: p-value, t-test, chi-squared\n5. Regresión lineal y múltiple\n6. Intervalos de confianza\n7. Monte Carlo simulation"},
+     {type:"prompt",label:"🤖 PROMPT IA",text:`"Enséñame estadística con ejemplos DUALES: t-test (mi estrategia vs buy&hold / versión A vs B), correlación (volumen vs movimiento / marketing vs ventas), Monte Carlo (simular equity / simular revenue). Código Python con scipy.stats."`},
+     {type:"project",label:"🏆 PROYECTO VALIDADOR",text:"TRADER: Valida tu estrategia con t-test (p < 0.05) y Monte Carlo.\nANALISTA: Dataset de A/B testing de Kaggle, determina significancia."}
+   ]},
+  {id:"sql",phase:2,title:"SQL",weeks:"Sem 9-11",icon:"🗄️",trader:false,analyst:true,overlap:false,
+   desc:"El 90% de las ofertas de Data Analyst piden SQL.",
+   traderUse:"Útil si almacenas trades en DB, pero no es core.",
+   analystUse:"OBLIGATORIO. Consultar bases de datos, extraer datos, crear reportes.",
+   blocks:[
+     {type:"learn",label:"📖 QUÉ APRENDER",text:"1. SELECT, FROM, WHERE\n2. JOINs: INNER, LEFT, RIGHT, FULL\n3. GROUP BY, HAVING, ORDER BY\n4. Aggregations: COUNT, SUM, AVG, MIN, MAX\n5. Subqueries y CTEs (WITH clause)\n6. Window Functions: ROW_NUMBER, RANK, LAG, LEAD\n7. CASE WHEN"},
+     {type:"prompt",label:"🤖 PROMPT IA",text:`"Crea 15 ejercicios SQL progresivos con schema e-commerce. Los últimos 5 nivel entrevista Data Analyst (retención mes a mes, revenue rolling 3 meses, ranking por categoría)."`},
+     {type:"resource",label:"🔗 RECURSOS GRATIS",text:"• SQLBolt (sqlbolt.com) — el mejor para empezar\n• LeetCode SQL problems\n• HackerRank SQL"},
+     {type:"project",label:"🏆 PROYECTO VALIDADOR",text:"Resuelve 30 problemas SQL: 10 easy, 15 medium, 5 hard. Medium sin ayuda = listo para entrevistas."}
+   ]},
+  {id:"pine",phase:2,title:"Pine Script (TradingView)",weeks:"Sem 9-11",icon:"📈",trader:true,analyst:false,overlap:false,
+   desc:"Tu herramienta específica para crear estrategias de trading en TradingView.",
+   traderUse:"Indicadores custom, estrategias con backtest, alertas automáticas.",
+   analystUse:"No aplica directamente, pero la lógica es transferible.",
+   blocks:[
+     {type:"learn",label:"📖 QUÉ APRENDER",text:"1. Sintaxis Pine Script v6\n2. indicator() vs strategy()\n3. Variables: open, high, low, close, volume\n4. ta.ema(), ta.rsi(), ta.atr(), ta.crossover()\n5. strategy.entry(), strategy.exit(), strategy.close()\n6. request.security() multi-timeframe\n7. alertcondition() y webhooks"},
+     {type:"prompt",label:"🤖 PROMPT IA",text:`"Crea un curriculum de Pine Script v6 en 10 proyectos progresivos para futuros (ES/NQ): desde EMA simple hasta sistema completo con alertas JSON."`},
+     {type:"project",label:"🏆 PROYECTO VALIDADOR",text:"Estrategia completa con señales, gestión de riesgo ATR, filtro multi-timeframe, alertas. Backtest 6 meses, PF > 1.3."}
+   ]},
+  {id:"ml",phase:3,title:"Machine Learning",weeks:"Sem 12-16",icon:"🤖",trader:true,analyst:true,overlap:true,
+   desc:"ML es el multiplicador de fuerza. Trader: edges ocultos. Analista: predecir, clasificar, segmentar.",
+   traderUse:"Clasificar setups de alta probabilidad, feature importance, regímenes de mercado.",
+   analystUse:"Predicción de churn, segmentación, recomendaciones, detección de fraude.",
+   blocks:[
+     {type:"learn",label:"📖 QUÉ APRENDER",text:"1. Conceptos: features, target, train/test split, overfitting\n2. Scikit-learn\n3. Clasificación: Logistic Regression, Random Forest, XGBoost\n4. Regresión: Linear, Ridge, Lasso\n5. Clustering: K-Means, DBSCAN\n6. Métricas: accuracy, precision, recall, F1, AUC-ROC\n7. Feature engineering\n8. Cross-validation y hyperparameter tuning"},
+     {type:"prompt",label:"🤖 PROMPT IA",text:`"Crea 2 proyectos ML completos:\nTRADING: Clasificador trades ganadores. Features: RSI, ADX, ATR, volumen, hora, día, distancia VWAP. Random Forest + XGBoost.\nANALISTA: Predicción churn (dataset Telco Kaggle). Logistic Regression + Random Forest.\nPara ambos: EDA, feature engineering, métricas, visualizaciones."`},
+     {type:"resource",label:"🔗 RECURSOS GRATIS",text:"• Kaggle Learn ML\n• StatQuest YouTube — mejor explicación visual\n• Scikit-learn docs\n• fast.ai"},
+     {type:"project",label:"🏆 PROYECTO VALIDADOR",text:"Completa ambos proyectos. Publícalos en GitHub con README profesional. Portfolio dual."}
+   ]},
+  {id:"bi",phase:3,title:"BI Tools (Power BI / Tableau)",weeks:"Sem 14-16",icon:"📋",trader:false,analyst:true,overlap:false,
+   desc:"Las empresas quieren dashboards interactivos. Power BI y Tableau son el estándar.",
+   traderUse:"Podrías crear dashboards de tu trading, pero no es esencial.",
+   analystUse:"OBLIGATORIO para la mayoría de roles.",
+   blocks:[
+     {type:"learn",label:"📖 QUÉ APRENDER",text:"POWER BI (recomendado — gratis):\n1. Conectar fuentes de datos\n2. Power Query: transformar datos\n3. DAX: medidas calculadas\n4. Visualizaciones: KPIs, slicers, drill-through\n5. Relaciones entre tablas\n6. Publicar y compartir"},
+     {type:"prompt",label:"🤖 PROMPT IA",text:`"Guíame para crear un dashboard en Power BI con: KPIs (revenue, orders, avg ticket), gráfico de línea con trendline, bar chart top 10 productos, mapa por región, slicers por fecha/región/categoría."`},
+     {type:"resource",label:"🔗 RECURSOS GRATIS",text:"• Power BI Desktop (gratis de Microsoft)\n• Microsoft Learn (con certificación)\n• Tableau Public (gratis)"},
+     {type:"project",label:"🏆 PROYECTO VALIDADOR",text:"2 dashboards: uno de ventas/negocio y uno de tu trading."}
+   ]},
+  {id:"portfolio",phase:4,title:"Portfolio & Empleo",weeks:"Sem 17-20",icon:"💼",trader:false,analyst:true,overlap:false,
+   desc:"Sin portfolio no existes. Proyectos reales = ticket de entrada a entrevistas.",
+   traderUse:"Tu portfolio de trading son tus resultados.",
+   analystUse:"GitHub + dashboards + caso de estudio.",
+   blocks:[
+     {type:"learn",label:"📖 PORTFOLIO MÍNIMO",text:"1. GitHub con 3-5 proyectos documentados\n2. 1 proyecto end-to-end completo\n3. 1 dashboard Power BI/Tableau publicado\n4. 1 proyecto con SQL complejo\n5. LinkedIn optimizado\n6. CV de 1 página con números"},
+     {type:"prompt",label:"🤖 PROMPT IA",text:`"Diseña un proyecto end-to-end: análisis Airbnb (datos gratis en Inside Airbnb). Pregunta de negocio, limpieza Pandas, EDA Seaborn/Plotly, estadística, modelo ML para precio, dashboard Streamlit, README profesional, recomendaciones accionables."`},
+     {type:"project",label:"🏆 PROYECTO VALIDADOR",text:"3 proyectos en GitHub, 1 dashboard publicado, LinkedIn actualizado. Aplica a 5 posiciones Junior."}
+   ]},
+  {id:"deploy",phase:4,title:"Trading en Vivo",weeks:"Sem 17-20+",icon:"🚀",trader:true,analyst:false,overlap:false,
+   desc:"Paper → micro contratos → escalar. Tus skills de Python te hacen empleable mientras tanto.",
+   traderUse:"Alertas, webhooks, ejecución semi-automática, tracking.",
+   analystUse:"Las mismas skills de automatización aplican en el trabajo.",
+   blocks:[
+     {type:"learn",label:"📖 CAMINO A REAL",text:"1. Validar con 100+ trades en paper\n2. Métricas: PF > 1.3, Max DD < 15%, Sharpe > 1\n3. Empezar con 1 micro (MES $5/punto)\n4. Stop diario $50-100\n5. Tracking automatizado con Python\n6. Review semanal con datos\n7. Escalar solo con 2 meses rentables"},
+     {type:"prompt",label:"🤖 PROMPT IA",text:`"Crea sistema Python para trackear trading: leer trades de CSV, calcular win rate, profit factor, Sharpe, max drawdown, generar equity curve, heatmap hora/día, detectar desviaciones del backtest, reporte PDF semanal, alerta si drawdown excede threshold."`},
+     {type:"project",label:"🏆 PROYECTO DUAL",text:"Este proyecto demuestra skills de Data Analyst Y es tu herramienta de trader. Win-win."}
+   ]}
+];
+
+const PHASE_META=[
+  {num:1,label:"BASE",color:"var(--cyan)",weeks:"Sem 1-5"},
+  {num:2,label:"CORE",color:"var(--purple)",weeks:"Sem 5-11"},
+  {num:3,label:"AVANZADO",color:"var(--amber)",weeks:"Sem 12-16"},
+  {num:4,label:"DEPLOY",color:"var(--green)",weeks:"Sem 17-20"}
+];
+
+let currentFilter="all", currentPhase=0, openSkills={};
+
+function render(){
+  // Filters
+  const filtersEl=document.getElementById("filters");
+  filtersEl.innerHTML=[
+    {key:"all",label:"Todo",color:"#888"},
+    {key:"overlap",label:"Dual Path",color:"var(--gold)"},
+    {key:"trader",label:"Trader",color:"var(--red)"},
+    {key:"analyst",label:"Analista",color:"var(--blue)"}
+  ].map(f=>`<button class="filter-btn mono ${currentFilter===f.key?'active':''}" style="--filter-color:${f.color}" onclick="setFilter('${f.key}')">${f.label}</button>`).join("");
+
+  // Phase tabs
+  const tabsEl=document.getElementById("phaseTabs");
+  tabsEl.innerHTML=`<button class="phase-tab mono ${currentPhase===0?'active':''}" style="--tab-color:#888" onclick="setPhase(0)">TODAS</button>`+
+    PHASE_META.map(p=>`<button class="phase-tab mono ${currentPhase===p.num?'active':''}" style="--tab-color:${p.color}" onclick="setPhase(${p.num})">F${p.num} ${p.label}</button>`).join("");
+
+  // Filter skills
+  let filtered=SKILLS.filter(s=>{
+    if(currentFilter==="overlap")return s.overlap;
+    if(currentFilter==="trader")return s.trader;
+    if(currentFilter==="analyst")return s.analyst;
+    return true;
+  });
+  if(currentPhase>0)filtered=filtered.filter(s=>s.phase===currentPhase);
+
+  // Render skills
+  const listEl=document.getElementById("skillsList");
+  listEl.innerHTML=filtered.map(s=>{
+    const pc=PHASE_META[s.phase-1]?.color||"var(--cyan)";
+    const isOpen=openSkills[s.id];
+    let badges=`<span class="badge badge-weeks mono">${s.weeks}</span>`;
+    if(s.overlap)badges+=`<span class="badge badge-dual mono">DUAL PATH</span>`;
+    if(s.trader&&!s.analyst)badges+=`<span class="badge badge-trader mono">TRADER</span>`;
+    if(s.analyst&&!s.trader)badges+=`<span class="badge badge-analyst mono">ANALISTA</span>`;
+
+    let blocksHtml=s.blocks.map(b=>`
+      <div class="content-block block-${b.type}">
+        <div class="block-label mono">${b.label}</div>
+        <div class="block-text">${b.text}</div>
+      </div>`).join("");
+
+    return `
+    <div class="skill-card ${isOpen?'open':''}" style="--phase-color:${pc}">
+      <button class="skill-header" onclick="toggleSkill('${s.id}')">
+        <div class="skill-icon">${s.icon}</div>
+        <div class="skill-info">
+          <div class="skill-name">${s.title}</div>
+          <div class="skill-badges">${badges}</div>
+        </div>
+        <div class="skill-toggle">+</div>
+      </button>
+      <div class="skill-content">
+        <p class="skill-desc">${s.desc}</p>
+        <div class="use-cases">
+          <div class="use-case use-trader">
+            <div class="use-label mono" style="color:var(--red)">📈 PARA TRADING</div>
+            <div class="use-text">${s.traderUse}</div>
+          </div>
+          <div class="use-case use-analyst">
+            <div class="use-label mono" style="color:var(--blue)">💼 PARA EMPLEO</div>
+            <div class="use-text">${s.analystUse}</div>
+          </div>
+        </div>
+        ${blocksHtml}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function setFilter(f){currentFilter=f;render()}
+function setPhase(p){currentPhase=p;render()}
+function toggleSkill(id){openSkills[id]=!openSkills[id];render()}
+function toggleSalary(){
+  const g=document.getElementById("salaryGrid");
+  const i=document.getElementById("salaryIcon");
+  const open=g.classList.toggle("open");
+  i.style.transform=open?"rotate(45deg)":"none";
+}
+
+render();
+</script>
+</body>
+</html>
