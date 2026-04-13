@@ -9,12 +9,12 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="English Roadmap">
+  <meta name="apple-mobile-web-app-title" content="English Pro">
   
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/felixdevim-prog/datatrade/main/Gemini_Generated_Image_ahwwjahwwjahwwja.png">
   <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/felixdevim-prog/datatrade/main/Gemini_Generated_Image_ahwwjahwwjahwwja.png">
 
-  <link rel="manifest" href='data:application/manifest+json,{"name":"English Mastery Roadmap","short_name":"English Pro","start_url":".","display":"standalone","background_color":"#0A0A0F","theme_color":"#06B6D4","icons":[{"src":"https://raw.githubusercontent.com/felixdevim-prog/datatrade/main/Gemini_Generated_Image_ahwwjahwwjahwwja.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}'>
+  <link rel="manifest" href='data:application/manifest+json,{"name":"English Mastery Roadmap","short_name":"English Pro","start_url":".","display":"standalone","background_color":"#0A0A0F","theme_color":"#0A0A0F","icons":[{"src":"https://raw.githubusercontent.com/felixdevim-prog/datatrade/main/Gemini_Generated_Image_ahwwjahwwjahwwja.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}'>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,207 +25,347 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <style>
-    body { margin: 0; padding: 0; background: #0A0A0F; -webkit-tap-highlight-color: transparent; }
+    body { margin: 0; padding: 0; background: #0A0A0F; color: #e8e8ed; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
     * { box-sizing: border-box; }
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    
-    /* Animación de entrada suave */
-    #root { animation: fadeIn 0.5s ease-in; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
 <body>
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState } = React;
 
-    // Constantes de datos (SCIENCE y PHASES se mantienen igual que tu lógica original)
     const SCIENCE = [
-      { principle: "Repetición Espaciada", source: "Ebbinghaus (1885)", desc: "Revisar vocabulario en intervalos crecientes triplica la retención.", tool: "4000 Essential Words + Anki" },
-      { principle: "Input Comprensible", source: "Krashen (1982)", desc: "Adquieres idioma al entender el 95% del contenido. El resto se absorbe por contexto.", tool: "Busuu + YouTube/Podcasts" },
-      { principle: "Retrieval Practice", source: "Roediger (2011)", desc: "Recordar activamente es 3x más efectivo que releer pasivamente.", tool: "Gemini Pro + Anki" },
-      { principle: "Interleaving", source: "Lafleur (2020)", desc: "Mezclar skills (listening + speaking) produce aprendizaje más profundo.", tool: "Busuu + Rutina mixta" },
-      { principle: "Output Forzado", source: "Swain (1985)", desc: "Hablar te obliga a notar los huecos en tu conocimiento.", tool: "Gemini Pro (Conversación)" },
-      { principle: "Filtro Afectivo Bajo", source: "Krashen (1982)", desc: "La IA elimina el miedo al juicio, bajando la ansiedad de aprendizaje.", tool: "Gemini Pro" },
+      { principle: "Repetición Espaciada", source: "Ebbinghaus (1885), Pashler et al. (2007)", desc: "Revisar vocabulario en intervalos crecientes (1d→3d→7d→14d→30d) triplica la retención vs. estudiar todo de golpe.", tool: "4000 Essential Words + Anki (gratis)" },
+      { principle: "Input Comprensible (i+1)", source: "Krashen (1982), Nation (2001)", desc: "Adquieres idioma al exponerte a contenido donde entiendes 90-95%. El 5-10% nuevo se absorbe por contexto.", tool: "Busuu Premium + YouTube/Podcasts" },
+      { principle: "Retrieval Practice", source: "Roediger & Butler (2011), Carpenter (2020)", desc: "Intentar recordar activamente es 2-3x más efectivo que releer o reescuchar pasivamente.", tool: "Gemini Pro (quiz oral) + Anki" },
+      { principle: "Interleaving", source: "Lafleur (2020), CALL-EJ 2024", desc: "Mezclar tipos de práctica (vocab + grammar + listening + speaking) produce aprendizaje más profundo que practicar una skill a la vez.", tool: "Busuu (estructura mixta) + Rutina diaria" },
+      { principle: "Output Forzado", source: "Swain (1985), Output Hypothesis", desc: "Hablar y escribir te obliga a notar los gaps en tu conocimiento. Sin output, el input se queda pasivo.", tool: "Gemini Pro (conversación) + Busuu Community" },
+      { principle: "Filtro Afectivo Bajo", source: "Krashen (1982), Affective Filter", desc: "La ansiedad bloquea la adquisición. Practicar con IA elimina el miedo al juicio y baja el filtro.", tool: "Gemini Pro (sin juicio) + Busuu (comunidad)" },
     ];
 
     const PHASES = [
       {
         id: 1, title: "CIMIENTOS", subtitle: "A2 → A2+", duration: "Meses 1-2", color: "#06B6D4", darkColor: "#083344",
-        icon: "🧱", targetVocab: "1,500 palabras", hoursPerDay: "1.5-2 hrs/día",
+        icon: "🧱", targetVocab: "1,000-1,500 palabras", hoursPerDay: "1.5-2 hrs/día",
         description: "Solidificar tu base. Entender el sistema del inglés y construir vocabulario funcional.",
         weeklySchedule: {
-          title: "Rutina Diaria",
+          title: "Rutina Diaria (1.5-2 hrs)",
           blocks: [
-            { time: "30 min", activity: "Busuu Premium", detail: "Lecciones A2 + correcciones de la comunidad." },
-            { time: "20 min", activity: "4000 Essential Words", detail: "1 unidad (20 palabras) + lectura en voz alta." },
-            { time: "15 min", activity: "Anki SRS", detail: "Flashcards con definiciones en inglés únicamente." },
-            { time: "20 min", activity: "Listening Pasivo", detail: "Podcasts con transcripción (All Ears English)." },
-            { time: "15 min", activity: "Gemini Output", detail: "Conversación simple sobre el tema del día." },
+            { time: "30 min", activity: "Busuu Premium", detail: "1-2 lecciones del curso A2. Completar TODOS los ejercicios incluyendo speaking. Enviar ejercicios escritos a la comunidad para corrección." },
+            { time: "20 min", activity: "4000 Essential Words (Book 1)", detail: "1 unidad = 20 palabras. Leer definición + oración ejemplo. Hacer los ejercicios del libro. Al terminar, leer la historia de la unidad en voz alta." },
+            { time: "15 min", activity: "Anki (Repetición Espaciada)", detail: "Crear flashcards de las 20 palabras del día. Formato: Frente = palabra en inglés. Atrás = definición EN INGLÉS (no español) + oración ejemplo. Revisar tarjetas pendientes." },
+            { time: "20 min", activity: "Listening Pasivo (Input)", detail: "Podcast: 'English Learning for Curious Minds' o 'All Ears English' — episodios cortos con transcripción. Escuchar 1x sin leer, luego 1x leyendo transcripción." },
+            { time: "15 min", activity: "Gemini Pro (Output)", detail: "Prompt: 'I'm A2 level in English. Let's have a simple conversation about [tema del día]. Correct my mistakes gently and explain why. Use simple vocabulary.' Hablar en voz alta o escribir." },
           ]
         },
-        milestones: ["Semana 2: Book 1 completado", "Semana 4: Nivel A2 en Busuu", "Semana 8: 800 palabras dominadas"],
-        geminiPrompts: [
-          { label: "Vocabulary Quiz", prompt: "I learned 20 words. Quiz me with sentences and blanks." },
-          { label: "Grammar Detective", prompt: "Analyze my 5 sentences and explain mistakes simply." }
+        milestones: [
+          "Semana 2: Completar Book 1 de 4000 Essential Words (20 unidades × 20 palabras = 400 palabras nuevas)",
+          "Semana 4: Completar nivel A2 en Busuu. Entender 70%+ de conversaciones simples.",
+          "Semana 6: Empezar Book 2. Poder mantener conversación básica de 3-5 min con Gemini.",
+          "Semana 8: Book 2 completado. 800 palabras nuevas dominadas. Placement test A2+ en Busuu.",
         ],
-        resources: ["AnkiWeb", "English Learning for Curious Minds", "YouGlish"]
+        geminiPrompts: [
+          { label: "Conversación Guiada", prompt: "I'm learning English at A2 level. Let's practice a conversation about ordering food at a restaurant. Start the conversation as a waiter. After each response, correct any grammar mistakes I make and suggest a better way to say it. Keep your language simple." },
+          { label: "Vocabulary Quiz", prompt: "I just learned these 20 words. Quiz me on them. Give me a sentence with a blank and 3 options. After I answer, explain why the correct answer fits. Do 10 questions." },
+          { label: "Grammar Detective", prompt: "I'm A2 level. I'll write 5 sentences in English. Find ALL my grammar mistakes, explain each one simply in English, and give me the corrected version." },
+        ],
+        coursera: "English for Career Development (University of Pennsylvania) — gratis con Coursera Plus. Cubre inglés para entrevistas y workplace.",
+        resources: [
+          "Anki (ankiweb.net) — app gratuita de flashcards con repetición espaciada",
+          "English Learning for Curious Minds Podcast — episodios con transcripción",
+          "BBC Learning English (bbc.co.uk/learningenglish) — ejercicios por nivel",
+          "Youglish.com — busca cualquier palabra y escucha cómo la pronuncian nativos en YouTube",
+        ]
       },
       {
         id: 2, title: "DESPEGUE", subtitle: "A2+ → B1", duration: "Meses 3-4", color: "#8B5CF6", darkColor: "#2E1065",
-        icon: "🚀", targetVocab: "2,500 palabras", hoursPerDay: "2-2.5 hrs/día",
-        description: "El gran salto. Pasar de entender palabras sueltas a comunicarte con fluidez básica.",
+        icon: "🚀", targetVocab: "2,000-2,500 palabras", hoursPerDay: "2-2.5 hrs/día",
+        description: "El salto más importante. Pasar de 'entiendo algo' a 'puedo comunicarme'.",
         weeklySchedule: {
-          title: "Rutina B1",
+          title: "Rutina Diaria (2-2.5 hrs)",
           blocks: [
-            { time: "30 min", activity: "Busuu B1", detail: "Enfoque en ejercicios de speaking IA." },
-            { time: "40 min", activity: "4000 Words (B3-4)", detail: "Reescribir historias con tus propias palabras." },
-            { time: "30 min", activity: "Inmersión YouTube", detail: "Canales técnicos y de trading en inglés." },
-            { time: "20 min", activity: "Gemini Workplace", detail: "Simular escenarios de oficina y soporte." },
+            { time: "30 min", activity: "Busuu Premium — Nivel B1", detail: "Empezar curso B1. Usar la función 'Conversations' con IA de Busuu para cada lección." },
+            { time: "20 min", activity: "4000 Essential Words (Books 3-4)", detail: "Continuar 1 unidad/día. Después de leer la historia, reescribirla con tus propias palabras." },
+            { time: "15 min", activity: "Anki Review", detail: "Las revisiones diarias toman ~15 min gracias al algoritmo SRS. Agregar 20 nuevas del libro del día." },
+            { time: "25 min", activity: "Immersive Listening", detail: "YouTube: canales como 'English with Lucy'. Series en inglés con subtítulos EN INGLÉS." },
+            { time: "20 min", activity: "Gemini Pro — Conversación Avanzada", detail: "Simular escenarios de call center y workplace." },
+            { time: "20 min", activity: "Coursera — Curso Estructurado", detail: "1 lección por día de 'Improve Your English Communication Skills' (Georgia Tech)." },
           ]
         },
-        milestones: ["Semana 12: Conversación de 10 min sin pausas", "Semana 16: Nivel B1 certificado"],
-        geminiPrompts: [
-          { label: "Debate", prompt: "Let's debate: 'Remote work vs Office work'. Use connectors." }
+        milestones: [
+          "Semana 10: Book 3 completado. 1,200 palabras acumuladas en Anki.",
+          "Semana 12: Mantener conversación de 10 min con Gemini sin pausas largas.",
+          "Semana 16: Completar nivel B1 en Busuu. Pasar test de placement B1.",
         ],
-        resources: ["Rachel's English", "TED Talks", "Write & Improve"]
+        geminiPrompts: [
+          { label: "Simulación Call Center", prompt: "Act as a customer calling a tech support call center. I'm the agent. Give me a realistic problem. After the call ends, rate my performance." },
+          { label: "Debate Estructurado", prompt: "Let's have a friendly debate. Topic: 'Remote work is better than office work.' You argue FOR office work, I'll argue FOR remote work." },
+          { label: "Storytelling Practice", prompt: "I'll tell you a story. Ask me 3 follow-up questions, point out grammar patterns I should improve, and retell my story using native phrasing." },
+        ],
+        coursera: "Improve Your English Communication Skills (Georgia Tech) — speaking, writing, presentations.",
+        resources: [
+          "English with Lucy (YouTube) — gramática y vocabulario intermedio",
+          "TED Talks con subtítulos — comprehensible input de alta calidad",
+          "Write & Improve (writeandimprove.com) — Cambridge, corrección automática gratis",
+        ]
       },
       {
         id: 3, title: "ACELERACIÓN", subtitle: "B1 → B2", duration: "Meses 5-7", color: "#F59E0B", darkColor: "#451A03",
-        icon: "⚡", targetVocab: "3,500 palabras", hoursPerDay: "2-3 hrs/día",
-        description: "Nivel profesional. Preparación para trabajar en entornos bilingües y call centers.",
+        icon: "⚡", targetVocab: "3,000-3,500 palabras", hoursPerDay: "2-3 hrs/día",
+        description: "De 'puedo comunicarme' a 'puedo trabajar en inglés'. B2 es el nivel mínimo para call center profesional.",
         weeklySchedule: {
-          title: "Rutina Business",
+          title: "Rutina Diaria (2-3 hrs)",
           blocks: [
-            { time: "30 min", activity: "Busuu B2", detail: "Business English y lecciones corporativas." },
-            { time: "30 min", activity: "Sentence Mining", detail: "Crear tarjetas Anki de oraciones reales de podcasts." },
-            { time: "40 min", activity: "Gemini Pro", detail: "Entrevistas de trabajo y manejo de clientes difíciles." },
-            { time: "30 min", activity: "Deep Listening", detail: "Transcribir segmentos de podcasts avanzados." },
+            { time: "30 min", activity: "Busuu Premium — Nivel B2", detail: "Enfocarse en las lecciones de Business English si están disponibles." },
+            { time: "20 min", activity: "4000 Essential Words (Books 5-6)", detail: "Después de cada unidad, escribir un párrafo usando las 20 palabras." },
+            { time: "15 min", activity: "Anki Review + Sentence Mining", detail: "Crear tarjetas con ORACIONES completas sacadas de podcasts/artículos." },
+            { time: "30 min", activity: "Deep Listening", detail: "Podcasts avanzados: escuchar 1 segmento de 5 min → transcribir → comparar." },
+            { time: "30 min", activity: "Gemini Pro — Workplace Simulation", detail: "Simulaciones laborales intensas: entrevistas, reuniones, quejas." },
+            { time: "20 min", activity: "Coursera — Especialización", detail: "Business English for Non-Native Speakers (Hong Kong PolyU)." },
           ]
         },
-        milestones: ["Mes 6: Mock interview con Gemini (7/10)", "Mes 7: Explicar conceptos de trading en inglés"],
-        geminiPrompts: [
-          { label: "Job Interview", prompt: "Act as a Hiring Manager for a Data Analyst position. Interview me." }
+        milestones: [
+          "Mes 5: Books 5 completado. 3,000+ palabras en Anki.",
+          "Mes 6: Sostener entrevista de trabajo simulada de 20 min con Gemini (7+/10).",
+          "Mes 7: Pasar placement B2 en Busuu. Explicar conceptos técnicos en inglés.",
         ],
-        resources: ["Business English Pod", "The Moth", "Grammarly"]
+        geminiPrompts: [
+          { label: "Entrevista de Trabajo", prompt: "Act as a hiring manager for a Data Analyst / Call Center position. Conduct a full job interview with me." },
+          { label: "Meeting Simulation", prompt: "Let's simulate a team meeting. You're the project manager, I'm presenting weekly results. Challenge my conclusions." },
+          { label: "Difficult Customer", prompt: "Act as an extremely angry customer calling about a billing error. Test my ability to empathize and de-escalate." },
+        ],
+        coursera: "Business English for Non-Native Speakers (Hong Kong PolyU).",
+        resources: [
+          "Business English Pod (businessenglishpod.com) — lecciones de inglés profesional",
+          "The Moth Podcast — historias reales contadas por nativos",
+          "Grammarly (grammarly.com) — extensión gratis que corrige tu escritura",
+        ]
       },
       {
-        id: 4, title: "DOMINIO", subtitle: "B2 → C1", duration: "Meses 8-10", color: "#10B981", darkColor: "#052E16",
-        icon: "👑", targetVocab: "4,000+ palabras", hoursPerDay: "2-3 hrs/día",
-        description: "Pulido final. El inglés se convierte en tu lengua de trabajo principal.",
+        id: 4, title: "DOMINIO", subtitle: "B2 → B2+/C1", duration: "Meses 8-10", color: "#10B981", darkColor: "#052E16",
+        icon: "👑", targetVocab: "4,000+ palabras activas", hoursPerDay: "2-3 hrs/día",
+        description: "Pulir hasta nivel profesional avanzado. El inglés se convierte en uno que 'usas'.",
         weeklySchedule: {
-          title: "Rutina Nativa",
+          title: "Rutina Diaria (2-3 hrs)",
           blocks: [
-            { time: "Todo el día", activity: "Inmersión Total", detail: "OS del móvil, PC y redes sociales en inglés." },
-            { time: "30 min", activity: "Shadowing", detail: "Imitar tono y ritmo de nativos en TED Talks." },
-            { time: "30 min", activity: "Gemini High-Level", detail: "Debatir temas complejos de IA y economía." },
-            { time: "30 min", activity: "Professional Writing", detail: "Redacción de reportes y correos técnicos." },
+            { time: "30 min", activity: "Immersión Total", detail: "Cambiar el idioma de tu teléfono, computadora, y redes sociales a inglés." },
+            { time: "20 min", activity: "Anki — Solo Mantenimiento", detail: "Agregar solo vocabulario especializado (call center jargon, data analysis terms)." },
+            { time: "30 min", activity: "Shadowing", detail: "Escuchar un nativo hablar e IMITAR simultáneamente — tono, ritmo, entonación." },
+            { time: "30 min", activity: "Gemini Pro — Nivel Nativo", detail: "Conversaciones sin andamiaje. Pedir que NO simplifique su lenguaje." },
+            { time: "20 min", activity: "Escritura Profesional", detail: "Escribir emails profesionales, reportes, mensajes de Slack en inglés." },
+            { time: "20 min", activity: "Coursera — Capstone", detail: "Participar en foros de discusión en inglés." },
           ]
         },
-        milestones: ["Mes 9: Entender 95% de reuniones", "Mes 10: Aplicar a vacantes internacionales"],
-        geminiPrompts: [
-          { label: "Native Coach", prompt: "Don't simplify your language. Use idioms and sarcasm." }
+        milestones: [
+          "Mes 8: Entender 95%+ de conversaciones profesionales.",
+          "Mes 9: Pasar mock interview completa con rating 8+/10 de Gemini.",
+          "Mes 10: Aplicar a posiciones. Tu inglés ya es herramienta de trabajo.",
         ],
-        resources: ["EF SET Certificate", "English Shadowing", "Reddit /r/DataScience"]
+        geminiPrompts: [
+          { label: "Conversación Nivel Nativo", prompt: "Let's have a natural conversation about data analysis. Don't simplify your English. Use idioms." },
+          { label: "Impromptu Speaking", prompt: "Give me a random professional topic. I have 30 seconds to think, then I'll speak for 2 minutes non-stop." },
+          { label: "Accent Coach", prompt: "Help me with pronunciation. Identify words that Spanish speakers commonly mispronounce." },
+        ],
+        coursera: "Academic English: Writing Specialization (UC Irvine).",
+        resources: [
+          "EF SET (efset.org) — test de nivel gratuito con certificado reconocido",
+          "Shadowing technique: buscar 'English shadowing practice' en YouTube",
+          "Unirse a comunidades en inglés: Reddit r/EnglishLearning",
+        ]
       }
     ];
 
-    // Componentes UI
     function ScienceCard({ s, isOpen, onToggle }) {
       return (
-        <div style={{ background:"#111119", borderRadius:12, border:`1px solid ${isOpen?"#06B6D4":"#1e1e2e"}`, overflow:"hidden", marginBottom:8 }}>
-          <button onClick={onToggle} style={{ width:"100%", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"14px", background:"transparent", border:"none", cursor:"pointer", color:"#e8e8ed" }}>
+        <div style={{ background:"#111119", borderRadius:12, border:`1px solid ${isOpen?"#06B6D4":"#1e1e2e"}`, overflow:"hidden", transition:".3s" }}>
+          <button onClick={onToggle} style={{ width:"100%", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 14px", background:"transparent", border:"none", cursor:"pointer", color:"#e8e8ed", textAlign:"left" }}>
             <div>
               <div style={{ fontSize:14, fontWeight:700 }}>{s.principle}</div>
-              <div style={{ fontSize:10, color:"#06B6D4", fontFamily:"'JetBrains Mono',monospace" }}>{s.source}</div>
+              <div style={{ fontSize:10, color:"#06B6D4", fontFamily:"'JetBrains Mono',monospace", marginTop:2 }}>{s.source}</div>
             </div>
-            <span style={{ color:"#06B6D4", fontSize:18 }}>{isOpen?"−":"+"}</span>
+            <span style={{ color:"#06B6D4", fontSize:18, transform:isOpen?"rotate(45deg)":"none", transition:".3s" }}>+</span>
           </button>
-          {isOpen && <div style={{ padding:"0 14px 14px", fontSize:13, color:"#b0b0b8", lineHeight:1.5 }}>{s.desc}<br/><span style={{color:"#F59E0B", fontSize:11}}>🛠 {s.tool}</span></div>}
+          {isOpen && (
+            <div style={{ padding:"0 14px 14px" }}>
+              <p style={{ fontSize:13, color:"#b0b0b8", lineHeight:1.6, margin:"0 0 8px" }}>{s.desc}</p>
+              <div style={{ fontSize:11, color:"#F59E0B", background:"rgba(245,158,11,.08)", padding:"8px 10px", borderRadius:8, fontFamily:"'JetBrains Mono',monospace" }}>
+                🛠 {s.tool}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    function PromptCard({ p }) {
+      return (
+        <div style={{ background:"rgba(168,85,247,.06)", borderLeft:"3px solid #a855f7", borderRadius:"0 10px 10px 0", padding:"14px 16px", marginBottom:10 }}>
+          <div style={{ fontSize:9, fontWeight:700, color:"#a855f7", letterSpacing:1.5, marginBottom:6, fontFamily:"'JetBrains Mono',monospace" }}>🤖 {p.label}</div>
+          <div style={{ fontSize:12, lineHeight:1.65, color:"#c8b4ff", fontFamily:"'JetBrains Mono',monospace", background:"rgba(0,0,0,.25)", padding:12, borderRadius:8, whiteSpace:"pre-wrap" }}>{p.prompt}</div>
+        </div>
+      );
+    }
+
+    function PhaseView({ phase }) {
+      const [openSections, setOpenSections] = useState({schedule: true});
+      const toggle = (key) => setOpenSections(p => ({ ...p, [key]: !p[key] }));
+
+      const Section = ({ title, sKey, color, children }) => (
+        <div style={{ background:"#111119", borderRadius:14, border:`1px solid ${openSections[sKey]?color:"#1e1e2e"}`, overflow:"hidden", marginBottom:10, transition:".3s" }}>
+          <button onClick={() => toggle(sKey)} style={{ width:"100%", display:"flex", justifyContent:"space-between", alignItems:"center", padding:"14px 16px", background:"transparent", border:"none", cursor:"pointer", color:"#e8e8ed", textAlign:"left" }}>
+            <span style={{ fontSize:14, fontWeight:700 }}>{title}</span>
+            <span style={{ color, fontSize:18, transform:openSections[sKey]?"rotate(45deg)":"none", transition:".3s" }}>+</span>
+          </button>
+          {openSections[sKey] && <div style={{ padding:"0 16px 16px" }}>{children}</div>}
+        </div>
+      );
+
+      return (
+        <div>
+          <Section title={`📅 ${phase.weeklySchedule.title}`} sKey="schedule" color={phase.color}>
+            {phase.weeklySchedule.blocks.map((b, i) => (
+              <div key={i} style={{ display:"flex", gap:10, marginBottom:12, paddingBottom:12, borderBottom:i < phase.weeklySchedule.blocks.length-1?"1px solid #1e1e2e":"none" }}>
+                <div style={{ minWidth:56, fontSize:11, fontWeight:700, color:phase.color, fontFamily:"'JetBrains Mono',monospace", paddingTop:2 }}>{b.time}</div>
+                <div>
+                  <div style={{ fontSize:13, fontWeight:700, marginBottom:3 }}>{b.activity}</div>
+                  <div style={{ fontSize:12, color:"#a0a0b0", lineHeight:1.6 }}>{b.detail}</div>
+                </div>
+              </div>
+            ))}
+          </Section>
+          <Section title="🤖 Prompts para Gemini Pro" sKey="prompts" color="#A855F7">
+            {phase.geminiPrompts.map((p, i) => <PromptCard key={i} p={p} />)}
+          </Section>
+          <Section title="🎯 Milestones (Checkpoints)" sKey="milestones" color="#10B981">
+            {phase.milestones.map((m, i) => (
+              <div key={i} style={{ display:"flex", gap:10, marginBottom:10, alignItems:"flex-start" }}>
+                <div style={{ minWidth:22, height:22, borderRadius:"50%", border:"2px solid #10b981", display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, color:"#10b981", fontWeight:700, marginTop:1 }}>{i+1}</div>
+                <div style={{ fontSize:12.5, color:"#c0c0c8", lineHeight:1.6 }}>{m}</div>
+              </div>
+            ))}
+          </Section>
+          <Section title="🎓 Coursera Plus" sKey="coursera" color="#2563EB">
+            <div style={{ fontSize:13, color:"#93c5fd", lineHeight:1.7, background:"rgba(37,99,246,.08)", padding:12, borderRadius:10 }}>{phase.coursera}</div>
+          </Section>
+          <Section title="🔗 Recursos Gratuitos" sKey="resources" color="#F59E0B">
+            {phase.resources.map((r, i) => (
+              <div key={i} style={{ fontSize:12, color:"#fcd34d", lineHeight:1.6, marginBottom:6, paddingLeft:12, borderLeft:"2px solid rgba(245,158,11,.3)" }}>{r}</div>
+            ))}
+          </Section>
         </div>
       );
     }
 
     function EnglishRoadmap() {
       const [activePhase, setActivePhase] = useState(0);
+      const [showScience, setShowScience] = useState(false);
       const [openScience, setOpenScience] = useState({});
+
       const phase = PHASES[activePhase];
 
       return (
-        <div style={{ minHeight:"100vh", paddingBottom:80 }}>
-          {/* Header con tu Icono Pro */}
-          <div style={{ padding:"40px 20px", textAlign:"center", background:"linear-gradient(180deg,#12121A,#0A0A0F)" }}>
+        <div style={{ paddingBottom: "70px" }}>
+          
+          <div style={{ padding:"36px 16px 28px", textAlign:"center", borderBottom:"1px solid #1e1e2e", background:"linear-gradient(180deg,#0F0F1A,#0A0A0F)" }}>
             <img src="https://raw.githubusercontent.com/felixdevim-prog/datatrade/main/Gemini_Generated_Image_ahwwjahwwjahwwja.png" 
                  style={{ width:80, height:80, borderRadius:20, marginBottom:15, boxShadow:"0 10px 30px rgba(0,0,0,0.5)" }} 
                  alt="Logo" />
-            <div style={{ fontSize:10, letterSpacing:4, color:"#6b6b80", fontWeight:700, fontFamily:"'JetBrains Mono',monospace" }}>LUIS FELIPE ORTIZ SÁNCHEZ</div>
-            <h1 style={{ fontSize:28, fontWeight:800, margin:"10px 0 5px" }}>English <span style={{ color:"#06B6D4" }}>Mastery</span></h1>
-            <p style={{ fontSize:13, color:"#6b6b80" }}>Roadmap Científico 2026 · A2 a C1</p>
+            <div style={{ fontSize:10, letterSpacing:4, color:"#6b6b80", fontWeight:700, fontFamily:"'JetBrains Mono',monospace", marginBottom:14 }}>LUIS FELIPE ORTIZ SÁNCHEZ</div>
+            <h1 style={{ fontSize:"clamp(22px,5vw,34px)", fontWeight:800, margin:"0 0 6px", lineHeight:1.15, letterSpacing:"-0.5px" }}>
+              A2 → <span style={{ color:"#06B6D4" }}>C1</span> en 10 Meses
+            </h1>
+            <p style={{ fontSize:13, color:"#6b6b80", margin:"8px auto 0", maxWidth:420, lineHeight:1.5 }}>
+              Respaldado por ciencia cognitiva. Usando Busuu Premium + 4000 Essential Words + Gemini Pro + Coursera Plus.
+            </p>
           </div>
 
-          {/* Ciencia */}
-          <div style={{ padding:"0 20px" }}>
-            <h3 style={{ fontSize:12, color:"#6b6b80", marginBottom:10 }}>CIENCIA DEL APRENDIZAJE</h3>
-            {SCIENCE.map((s, i) => (
-              <ScienceCard key={i} s={s} isOpen={!!openScience[i]} onToggle={() => setOpenScience(p => ({ ...p, [i]: !p[i] }))} />
-            ))}
+          <div style={{ padding:"16px 16px 8px" }}>
+            <button onClick={() => setShowScience(!showScience)} style={{ width:"100%", display:"flex", justifyContent:"space-between", alignItems:"center", padding:"14px 16px", borderRadius:14, background:"#111119", border:"1px solid #1e1e2e", cursor:"pointer", color:"#e8e8ed" }}>
+              <div style={{ textAlign: "left" }}>
+                <div style={{ fontSize:15, fontWeight:700 }}>🔬 Base Científica</div>
+                <div style={{ fontSize:11, color:"#6b6b80", marginTop:2 }}>6 principios respaldados por investigación</div>
+              </div>
+              <span style={{ color:"#888", fontSize:18, transform:showScience?"rotate(45deg)":"none", transition:".3s" }}>+</span>
+            </button>
+            {showScience && (
+              <div style={{ display:"flex", flexDirection:"column", gap:8, marginTop:10 }}>
+                {SCIENCE.map((s, i) => (
+                  <ScienceCard key={i} s={s} isOpen={!!openScience[i]} onToggle={() => setOpenScience(p => ({ ...p, [i]: !p[i] }))} />
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Navegación Fases */}
-          <div className="hide-scrollbar" style={{ display:"flex", gap:10, padding:20, overflowX:"auto" }}>
+          <div className="hide-scrollbar" style={{ display:"flex", gap:6, padding:"16px", overflowX:"auto", WebkitOverflowScrolling:"touch" }}>
             {PHASES.map((p, i) => (
               <button key={p.id} onClick={() => setActivePhase(i)} style={{
-                flex:"0 0 auto", padding:"15px", borderRadius:15, minWidth:100,
+                flex:"0 0 auto", display:"flex", flexDirection:"column", alignItems:"center",
+                padding:"12px 14px", borderRadius:12, minWidth:78,
                 background: i === activePhase ? p.darkColor : "#111119",
-                border: `2px solid ${i === activePhase ? p.color : "#1e1e2e"}`,
-                color: i === activePhase ? p.color : "#6b6b80", textAlign:"center"
+                border: `1.5px solid ${i === activePhase ? p.color : "#1e1e2e"}`,
+                cursor:"pointer", color: i === activePhase ? p.color : "#6b6b80", transition:".25s"
               }}>
-                <div style={{ fontSize:24 }}>{p.icon}</div>
-                <div style={{ fontSize:10, fontWeight:800, marginTop:5 }}>FASE {p.id}</div>
+                <span style={{ fontSize:20, marginBottom:4 }}>{p.icon}</span>
+                <span style={{ fontSize:10, fontWeight:700, fontFamily:"'JetBrains Mono',monospace" }}>F{p.id}</span>
               </button>
             ))}
           </div>
 
-          {/* Detalles de Fase */}
-          <div style={{ padding:"0 20px" }}>
-            <div style={{ background:phase.darkColor, padding:20, borderRadius:20, border:`1px solid ${phase.color}`, marginBottom:20 }}>
-              <h2 style={{ margin:0, fontSize:22 }}>{phase.title}</h2>
-              <p style={{ fontSize:12, color:phase.color, fontWeight:700 }}>{phase.subtitle} · {phase.duration}</p>
-              <p style={{ fontSize:14, color:"#a0a0b0", marginTop:10 }}>{phase.description}</p>
-              
-              <div style={{ display:"flex", gap:10, marginTop:15 }}>
-                <div style={{ flex:1, background:"rgba(0,0,0,0.3)", padding:10, borderRadius:12, textAlign:"center" }}>
-                  <div style={{ fontSize:9, color:"#6b6b80" }}>OBJETIVO</div>
-                  <div style={{ fontSize:13, fontWeight:700 }}>{phase.targetVocab}</div>
-                </div>
-                <div style={{ flex:1, background:"rgba(0,0,0,0.3)", padding:10, borderRadius:12, textAlign:"center" }}>
-                  <div style={{ fontSize:9, color:"#6b6b80" }}>TIEMPO</div>
-                  <div style={{ fontSize:13, fontWeight:700 }}>{phase.hoursPerDay}</div>
-                </div>
+          <div style={{ padding:"4px 16px 16px" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:8 }}>
+              <div style={{ width:48, height:48, borderRadius:12, background:phase.darkColor, border:`1.5px solid ${phase.color}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:24 }}>{phase.icon}</div>
+              <div>
+                <h2 style={{ margin:0, fontSize:20, fontWeight:800, letterSpacing:"-0.5px" }}>Fase {phase.id}: {phase.title}</h2>
+                <div style={{ fontSize:12, color:phase.color, fontWeight:600, fontFamily:"'JetBrains Mono',monospace" }}>{phase.subtitle} · {phase.duration}</div>
               </div>
             </div>
+            <p style={{ fontSize:13, color:"#a0a0b0", lineHeight:1.6, margin:"8px 0 0" }}>{phase.description}</p>
+            <div style={{ display:"flex", gap:8, marginTop:12 }}>
+              <div style={{ flex:1, background:"rgba(6,182,212,.06)", border:"1px solid rgba(6,182,212,.15)", borderRadius:10, padding:"10px 12px", textAlign:"center" }}>
+                <div style={{ fontSize:9, fontWeight:700, color:"#06B6D4", letterSpacing:1, fontFamily:"'JetBrains Mono',monospace" }}>VOCAB TARGET</div>
+                <div style={{ fontSize:14, fontWeight:700, marginTop:4 }}>{phase.targetVocab}</div>
+              </div>
+              <div style={{ flex:1, background:"rgba(245,158,11,.06)", border:"1px solid rgba(245,158,11,.15)", borderRadius:10, padding:"10px 12px", textAlign:"center" }}>
+                <div style={{ fontSize:9, fontWeight:700, color:"#F59E0B", letterSpacing:1, fontFamily:"'JetBrains Mono',monospace" }}>DEDICACIÓN</div>
+                <div style={{ fontSize:14, fontWeight:700, marginTop:4 }}>{phase.hoursPerDay}</div>
+              </div>
+            </div>
+          </div>
 
-            {/* Rutina */}
-            <div style={{ background:"#111119", padding:20, borderRadius:20, border:"1px solid #1e1e2e" }}>
-              <h3 style={{ fontSize:14, marginBottom:15 }}>📅 {phase.weeklySchedule.title}</h3>
-              {phase.weeklySchedule.blocks.map((b, i) => (
-                <div key={i} style={{ marginBottom:15, paddingBottom:15, borderBottom: i<phase.weeklySchedule.blocks.length-1?"1px solid #1e1e2e":"none" }}>
-                  <div style={{ fontSize:11, color:phase.color, fontWeight:700 }}>{b.time}</div>
-                  <div style={{ fontSize:14, fontWeight:700 }}>{b.activity}</div>
-                  <div style={{ fontSize:12, color:"#6b6b80" }}>{b.detail}</div>
+          <div style={{ padding:"0 16px 30px" }}>
+            <PhaseView phase={phase} />
+          </div>
+
+          <div style={{ padding:"0 16px 30px" }}>
+            <div style={{ background:"#111119", borderRadius:14, border:"1px solid #1e1e2e", padding:18 }}>
+              <div style={{ fontSize:9, letterSpacing:3, color:"#6b6b80", fontWeight:700, fontFamily:"'JetBrains Mono',monospace", marginBottom:10 }}>REGLAS DE ORO</div>
+              {[
+                { icon:"🧠", rule:"Nunca traduzcas mentalmente", detail:"Piensa imagen → palabra inglesa." },
+                { icon:"📱", rule:"Cambia TODO a inglés", detail:"Teléfono, PC, Netflix, YouTube." },
+                { icon:"🎯", rule:"1 unidad de 4000 Words por día", detail:"Sin excepción." },
+                { icon:"🗣️", rule:"Habla TODOS los días", detail:"10 min mínimo con Gemini." },
+                { icon:"📊", rule:"Mide tu progreso", detail:"Test de nivel en EF SET cada mes." },
+              ].map((r, i) => (
+                <div key={i} style={{ display:"flex", gap:10, marginBottom:12, paddingBottom:12, borderBottom:i<4?"1px solid #1e1e2e":"none" }}>
+                  <span style={{ fontSize:18 }}>{r.icon}</span>
+                  <div>
+                    <div style={{ fontSize:13, fontWeight:700 }}>{r.rule}</div>
+                    <div style={{ fontSize:11.5, color:"#6b6b80", lineHeight:1.5 }}>{r.detail}</div>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Footer Nav */}
-          <div style={{ position:"fixed", bottom:0, width:"100%", background:"#0A0A0F", borderTop:"1px solid #1e1e2e", padding:15, textAlign:"center", zIndex:100 }}>
-            <div style={{ height:4, background:"#1e1e2e", borderRadius:2, marginBottom:10, overflow:"hidden" }}>
-              <div style={{ height:"100%", width:`${((activePhase+1)/4)*100}%`, background:phase.color, transition:"0.4s" }} />
+          <div style={{ position:"fixed", bottom:0, left:0, right:0, background:"#0A0A0F", borderTop:"1px solid #1e1e2e", padding:"12px 16px", display:"flex", alignItems:"center", gap:10, zIndex:50 }}>
+            <div style={{ fontSize:11, color:"#6b6b80", fontFamily:"'JetBrains Mono',monospace", whiteSpace:"nowrap" }}>FASE {activePhase+1}/4</div>
+            <div style={{ flex:1, height:4, background:"#1e1e2e", borderRadius:2, overflow:"hidden" }}>
+              <div style={{ height:"100%", borderRadius:2, width:`${((activePhase+1)/4)*100}%`, background:`linear-gradient(90deg,#06B6D4,${phase.color})`, transition:"width .4s" }} />
             </div>
-            <span style={{ fontSize:10, color:"#6b6b80", fontFamily:"'JetBrains Mono',monospace" }}>PROGRESS: {phase.subtitle}</span>
+            <div style={{ fontSize:11, color:phase.color, fontWeight:700, fontFamily:"'JetBrains Mono',monospace" }}>{["A2→A2+","A2+→B1","B1→B2","B2→C1"][activePhase]}</div>
           </div>
         </div>
       );
@@ -233,14 +373,6 @@
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<EnglishRoadmap />);
-
-    // Registrar Service Worker para permitir instalación en Android
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        const sw = 'data:application/javascript;base64,c2VsZi.hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGV2ID0+IGV2LnJlc3BvbmRXaXRoKGZldGNoKGV2LnJlcXVlc3QpKSk7';
-        navigator.serviceWorker.register(`data:application/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGV2ID0+IGV2LnJlc3BvbmRXaXRoKGZldGNoKGV2LnJlcXVlc3QpKSk7`);
-      });
-    }
   </script>
 </body>
 </html>
