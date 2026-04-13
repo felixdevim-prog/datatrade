@@ -1,16 +1,22 @@
 {
-  "name": "English Mastery Roadmap",
-  "short_name": "English Pro",
+  "name": "Ultimate Analyst & Trader Roadmap",
+  "short_name": "DataTrade",
+  "description": "Roadmap científico de 12 meses para Data Analytics y Algorithmic Trading",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0A0A0F",
   "theme_color": "#0A0A0F",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "https://raw.githubusercontent.com/felixdevim-prog/datatrade/main/Gemini_Generated_Image_ahwwjahwwjahwwja.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/felixdevim-prog/datatrade/main/Gemini_Generated_Image_ahwwjahwwjahwwja.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
