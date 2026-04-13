@@ -3,425 +3,425 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0A0A0F">
-    <meta name="description" content="Roadmap Definitivo para Data Analyst y Algo Trader">
     <title>Ultimate Analyst & Trader</title>
     
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0A0A0F">
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/felixdevim-prog/datatrade/main/Gemini_Generated_Image_ahwwjahwwjahwwja.png">
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <style>
-        body, html { margin: 0; padding: 0; background: #0A0A0F; -webkit-tap-highlight-color: transparent; }
-        * { box-sizing: border-box; }
-        /* Scrollbar styling para un look más tech */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0A0A0F; }
-        ::-webkit-scrollbar-thumb { background: #1e1e2e; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
+        :root {
+            --bg-main: #0A0A0F;
+            --bg-card: #111119;
+            --border: #1e1e2e;
+            --text-main: #e8e8ed;
+            --text-muted: #6b6b80;
+            --text-light: #a0a0b0;
+            --blue: #3B82F6;
+            --red: #EF4444;
+            --cyan: #06B6D4;
+            --purple: #8B5CF6;
+            --purple-light: #A855F7;
+            --amber: #F59E0B;
+            --emerald: #10B981;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        button { font-family: inherit; }
+
+        /* Header */
+        .header {
+            padding: 36px 16px 28px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, #0F0F1A, #0A0A0F);
+        }
+        .header-tag { font-size: 9px; letter-spacing: 5px; color: var(--text-muted); font-weight: 700; margin-bottom: 14px; text-transform: uppercase; }
+        .header h1 { font-size: clamp(20px, 5vw, 32px); font-weight: 800; margin: 0 0 6px; line-height: 1.15; letter-spacing: -0.5px; }
+        .header p { font-size: 12.5px; color: var(--text-muted); margin: 8px auto 0; max-width: 440px; line-height: 1.5; }
+        
+        .badge { font-size: 9px; font-weight: 600; padding: 4px 10px; border-radius: 16px; background: rgba(139,92,246,.08); border: 1px solid rgba(139,92,246,.2); color: #a78bfa; }
+
+        /* General Sections & Accordions */
+        .section-container { padding: 16px 16px 6px; }
+        .accordion-btn {
+            width: 100%; display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 16px; background: transparent; border: none; cursor: pointer; color: var(--text-main); text-align: left;
+        }
+        .accordion-icon { font-size: 18px; transition: 0.3s; color: #888; }
+        .accordion-icon.open { transform: rotate(45deg); }
+
+        .card-container { background: var(--bg-card); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; transition: 0.3s; margin-bottom: 10px; }
+        .card-content { padding: 0 16px 16px; display: none; }
+        .card-content.show { display: block; }
+
+        /* Research & Market Cards */
+        .research-card { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; transition: 0.3s; margin-bottom: 8px; }
+        .research-card.open { border-color: var(--cyan); }
+        .research-content { padding: 0 14px 14px; display: none; }
+        .research-content.show { display: block; }
+
+        /* Tabs */
+        .tabs-container { display: flex; gap: 6px; padding: 16px; overflow-x: auto; scroll-behavior: smooth; }
+        .tabs-container::-webkit-scrollbar { display: none; }
+        .tab-btn {
+            flex: 0 0 auto; display: flex; flex-direction: column; align-items: center;
+            padding: 12px 14px; border-radius: 12px; min-width: 78px;
+            background: var(--bg-card); border: 1.5px solid var(--border);
+            cursor: pointer; color: var(--text-muted); transition: 0.25s;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-main);
+            border-top: 1px solid var(--border); padding: 12px 16px; display: flex; align-items: center; gap: 10px; z-index: 100;
+        }
+        .progress-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 2px; transition: width 0.4s, background 0.4s; }
+
     </style>
 </head>
 <body>
-    <div id="root"></div>
+
+    <div class="header">
+        <div class="header-tag mono">SCIENCE-BACKED · EVIDENCE-DRIVEN · 2026</div>
+        <h1><span style="color: var(--blue)">Data Analyst</span> + <span style="color: var(--red)">Algo Trader</span></h1>
+        <p>12 meses · 6 principios científicos · 6+ proyectos · 3 certificaciones · Respaldado por investigación cuantitativa</p>
+        <div style="display:flex; justify-content:center; gap:6px; margin-top:16px; flex-wrap:wrap;" id="header-badges">
+            <span class="badge mono">Coursera+</span>
+            <span class="badge mono">Gemini Pro</span>
+            <span class="badge mono">Kaggle</span>
+            <span class="badge mono">GitHub</span>
+            <span class="badge mono">Google Colab</span>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="card-container" id="research-main-card">
+            <button class="accordion-btn" onclick="toggleMain('research')">
+                <div>
+                    <div style="font-size:15px; font-weight:700;">🔬 Base Científica (6 principios)</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Cada técnica respaldada por papers peer-reviewed</div>
+                </div>
+                <span class="accordion-icon" id="research-main-icon">+</span>
+            </button>
+            <div class="card-content" id="research-main-content" style="padding: 0 16px 16px;">
+                <div id="research-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container" style="padding-top:0;">
+        <div class="card-container" id="market-main-card">
+            <button class="accordion-btn" onclick="toggleMain('market')">
+                <div>
+                    <div style="font-size:15px; font-weight:700;">📊 Datos del Mercado Laboral 2026</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Números reales de BLS, LinkedIn, WEF</div>
+                </div>
+                <span class="accordion-icon" id="market-main-icon">+</span>
+            </button>
+            <div class="card-content" id="market-main-content">
+                <div id="market-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;"></div>
+                <div style="background:rgba(139,92,246,.06); border:1px solid rgba(139,92,246,.15); border-radius:10px; padding:12px;">
+                    <div class="mono" style="font-size:9px; font-weight:700; color:#a78bfa; letter-spacing:1px; margin-bottom:4px;">STACK REQUERIDO (por % de ofertas)</div>
+                    <div id="market-stack" style="font-size:12px; color:#c4b5fd; line-height:1.6;"></div>
+                </div>
+                <div id="market-source" class="mono" style="font-size:9px; color:#4b4b60; margin-top:6px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs-container" id="tabs-container"></div>
+
+    <div id="phase-content-area" style="padding: 0 16px 30px;"></div>
+
+    <div style="padding: 20px 16px 50px; border-top: 1px solid var(--border); text-align: center;">
+        <div class="mono" style="font-size:9px; letter-spacing:3px; color:var(--text-muted); font-weight:700; margin-bottom:10px;">LA REALIDAD</div>
+        <p style="font-size:13px; color:var(--text-light); line-height:1.7; max-width:500px; margin:0 auto;">
+            <strong style="color:var(--blue)">80%+ de ofertas de Data Analyst piden SQL</strong>. No hay atajos. 
+            <strong style="color:var(--red)"> El trading rentable requiere validación estadística</strong>, no indicadores mágicos. 
+            Este roadmap usa <strong style="color:var(--purple-light)">deliberate practice + retrieval practice + spaced repetition</strong> porque 
+            la ciencia cognitiva dice que son los métodos más eficientes que existen. Tu disciplina es la variable que falta.
+        </p>
+    </div>
+
+    <div class="progress-bar-container">
+        <div class="mono" id="progress-text" style="font-size:11px; color:var(--text-muted); white-space:nowrap;">F1/4</div>
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="mono" id="progress-label" style="font-size:11px; font-weight:700;"></div>
+    </div>
 
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker registrado con éxito.', reg))
-                    .catch(err => console.error('Error al registrar Service Worker', err));
-            });
-        }
-    </script>
-
-    <script type="text/babel">
-        const { useState } = React;
-
+        // Data Definitions
         const RESEARCH = [
-          { id:"sr", title:"Repetición Espaciada", citation:"Ebbinghaus 1885; Carpenter et al. 2012", finding:"3 min/día de práctica espaciada triplican la retención a largo plazo vs. estudio masivo.", application:"Estudiar conceptos de Python/SQL en bloques espaciados, no maratones. Usar Anki para funciones y sintaxis." },
-          { id:"rp", title:"Retrieval Practice", citation:"Roediger & Butler 2011", finding:"Intentar recordar activamente es 2-3x más efectivo que releer documentación pasivamente.", application:"Cerrar el video e intentar recrear el código desde cero. Usar IA como quiz master." },
-          { id:"il", title:"Interleaving", citation:"Lafleur 2020", finding:"Mezclar tipos de práctica produce aprendizaje más profundo que bloques de una sola skill.", application:"Rutina mezcla habilidades: 40min SQL + 40min Python + 40min Viz." },
-          { id:"dl", title:"Deliberate Practice", citation:"Ericsson et al. 1993", finding:"Requiere feedback inmediato, dificultad al borde de tu capacidad, y repetición enfocada.", application:"Cada proyecto debe estar fuera de tu zona de comfort. Pedir code reviews estrictos." },
-          { id:"pbl", title:"Project-Based Learning", citation:"WEF Future of Jobs 2025", finding:"El 85% de hiring managers en tech priorizan portfolio sobre certificados.", application:"Cada fase termina con un proyecto publicable en GitHub." },
-          { id:"ct", title:"Cognitive Load Theory", citation:"Sweller 1988", finding:"El cerebro procesa ~4 chunks de información nueva a la vez.", application:"Máximo 2-3 conceptos nuevos por sesión. Profundidad supera amplitud." }
+            { id:"sr", title:"Repetición Espaciada", citation:"Ebbinghaus 1885; Carpenter et al. 2012; CALICO Journal 2016", finding:"3 min/día de práctica espaciada triplican la retención a largo plazo vs. estudio masivo. Un aumento del 25% en memorización de vocabulario técnico.", application:"Estudiar conceptos de Python/SQL en bloques espaciados, no maratones. Usar Anki para funciones y sintaxis." },
+            { id:"rp", title:"Retrieval Practice", citation:"Roediger & Butler 2011; Agarwal & Roediger 2018", finding:"Intentar recordar activamente (testing effect) es 2-3x más efectivo que releer documentación o ver tutoriales pasivamente.", application:"Después de cada lección de Coursera, cerrar el video e intentar recrear el código desde cero. Usar Gemini Pro como quiz master." },
+            { id:"il", title:"Interleaving", citation:"Lafleur 2020; CALL-EJ 2024; Rohrer & Taylor 2007", finding:"Mezclar tipos de práctica (SQL + Python + viz en la misma sesión) produce aprendizaje más profundo que bloques de una sola skill.", application:"La rutina diaria MEZCLA habilidades. Nunca estudies solo SQL por 3 horas. 40min SQL + 40min Python + 40min Viz = superior." },
+            { id:"dl", title:"Deliberate Practice", citation:"Ericsson et al. 1993; Peak: Secrets from the New Science of Expertise", finding:"No es cuántas horas practicas, sino CÓMO. La práctica deliberada requiere: feedback inmediato, dificultad al borde de tu capacidad, y repetición enfocada.", application:"Cada proyecto debe estar ligeramente fuera de tu zona de comfort. Gemini Pro te da feedback inmediato en tu código." },
+            { id:"pbl", title:"Project-Based Learning", citation:"Krajcik & Shin 2014; Bell 2010; WEF Future of Jobs 2025", finding:"El 85% de los hiring managers en tech priorizan portfolio sobre certificados. Proyectos end-to-end demuestran competencia real.", application:"Cada fase termina con un proyecto publicable en GitHub. Al final tienes 6+ proyectos que DEMUESTRAN lo que sabes." },
+            { id:"ct", title:"Cognitive Load Theory", citation:"Sweller 1988; Kalyuga et al. 2003", finding:"El cerebro procesa ~4 chunks de información nueva a la vez. Sobrecargar con demasiados conceptos simultáneos causa 'ilusión de aprendizaje'.", application:"Máximo 2-3 conceptos nuevos por sesión. La profundidad supera a la amplitud. Domina ANTES de avanzar." },
         ];
 
         const JOB_MARKET = {
-          stats: [
-            { stat:"11.5M", desc:"nuevos empleos data analytics (BLS)", color:"#06B6D4" },
-            { stat:"80%+", desc:"ofertas piden SQL (LinkedIn 2026)", color:"#A855F7" },
-            { stat:"23-35%", desc:"crecimiento roles data (BLS)", color:"#10B981" },
-            { stat:"$60K-$174K", desc:"rango salarial Analyst (SSRN)", color:"#F59E0B" },
-          ],
-          stack:"SQL (80%+) > Python (50%+) > Excel (60%+) > BI Tool (50%+) > Estadística > ML básico",
-          source:"Fuentes: Lightcast 2025, LinkedIn, BLS, WEF"
+            stats: [
+                { stat:"11.5M", desc:"nuevos empleos en data analytics (BLS)", color:"#06B6D4" },
+                { stat:"80%+", desc:"piden SQL como requisito (LinkedIn)", color:"#A855F7" },
+                { stat:"23-35%", desc:"crecimiento de roles data-centric", color:"#10B981" },
+                { stat:"$60K-$174K", desc:"rango salarial USA", color:"#F59E0B" },
+            ],
+            stack:"SQL (80%+ de ofertas) > Python (50%+) > Excel (60%+) > BI Tool (50%+) > Estadística > ML básico",
+            source:"Fuentes: Lightcast Job Postings 2025, LinkedIn Data, BLS, WEF Future of Jobs 2025, SSRN 2025"
         };
 
         const PHASES = [
-          {
-            id:1, title:"FUNDAMENTOS", subtitle:"Cero → Junior", duration:"Meses 1-3", color:"#06B6D4", dark:"#083344", icon:"🧱",
-            description:"Construir la base técnica obligatoria. Sin SQL y Python, no existes ni como analista ni como trader algorítmico.",
-            skills:["Python Core","Pandas/NumPy","SQL Fundamentos","Excel Avanzado","Git/GitHub"],
-            dailyRoutine:{
-              total:"2.5-3 hrs/día",
-              blocks:[
-                {time:"45 min",what:"Coursera — Google Data Analytics",how:"Curso 1-3. Tomar notas en TUS palabras. Quizzes sin mirar apuntes."},
-                {time:"40 min",what:"Python — Práctica real",how:"Semanas 1-4: Variables, loops. 5-8: Pandas. Nunca copies código sin entenderlo."},
-                {time:"35 min",what:"SQL — Cero a Intermedio",how:"SQLBolt.com → HackerRank → LeetCode Easy."},
-                {time:"15 min",what:"Anki — Sintaxis",how:"Flashcards de Python y SQL. Revisión diaria."},
-                {time:"20 min",what:"Gemini Pro",how:"Tutor personal DESPUÉS de intentar resolver solo."},
-              ]
-            },
-            geminiPrompts:[
-              {label:"Tutor de Python",prompt:"I'm learning Python for data analysis. Test my understanding on [TEMA]: give 5 coding challenges..."},
-              {label:"SQL Interview Prep",prompt:"Act as a senior analyst. Give me a SQL problem with schema. Grade correctness & efficiency."},
-              {label:"Code Review",prompt:"Review this code. Explain WHAT is wrong, WHY, and how a senior would write it."},
-            ],
-            coursera:[
-              {name:"Google Data Analytics Certificate",detail:"Cursos 1-3. La base conceptual.",badge:"Google"},
-              {name:"Python for Everybody (U. Michigan)",detail:"Paralelo opcional si Python resulta difícil.",badge:"UMich"},
-            ],
-            freeResources:[
-              "SQLBolt (sqlbolt.com) — tutorial interactivo",
-              "Kaggle Learn (kaggle.com/learn) — Python/Pandas",
-              "Google Colab — IDE Python gratis",
-            ],
-            traderParallel:"Aplica todo al mercado: calcula indicadores con Pandas, usa yfinance, visualiza con Plotly.",
-            project:{
-              title:"Proyecto 1: Exploratorio Financiero",
-              description:"Descarga datos de ES/NQ/BTC. Limpia faltantes, calcula retornos diarios, volatilidad, heatmap correlación.",
-              analystValue:"Demuestra: Python, Pandas, EDA, GitHub.",
-              traderValue:"Demuestra: base para sistemas cuantitativos."
-            },
-            milestone:"Poder escribir queries JOIN, manipular Pandas, y tener 1 proyecto en GitHub."
-          },
-          {
-            id:2, title:"INTERMEDIO", subtitle:"Junior → Competente", duration:"Meses 4-6", color:"#8B5CF6", dark:"#2E1065", icon:"⚡",
-            description:"Estadística, visualización avanzada, y las herramientas que te hacen contratable.",
-            skills:["Estadística","Power BI","Pine Script","Backtesting","A/B Testing"],
-            dailyRoutine:{
-              total:"3 hrs/día",
-              blocks:[
-                {time:"45 min",what:"IBM Data Analyst + Estadística",how:"IBM para viz. Statistics with Python para base cuantitativa."},
-                {time:"40 min",what:"Estadística Aplicada",how:"Descriptiva → Inferencial (t-test, p-value) → Regresión."},
-                {time:"30 min",what:"Power BI / Pine Script",how:"Power BI para dashboards. Pine Script v6 para estrategias de TradingView."},
-                {time:"25 min",what:"SQL Avanzado",how:"LeetCode Medium/Hard. CTEs, Window functions."},
-                {time:"20 min",what:"Mock Interviews",how:"Entrevistas de analista o análisis de estrategias."},
-              ]
-            },
-            geminiPrompts:[
-              {label:"Mock Interview Analista",prompt:"Conduct a full 30-minute interview: behavioral, SQL problem, Python task. Grade me."},
-              {label:"Stats for Trading",prompt:"My strategy has WR 55%. Calculate Sharpe, run Monte Carlo simulation, t-test for edge validity."},
-              {label:"Dashboard Review",prompt:"Critique my Power BI dashboard like a senior BI developer."},
-            ],
-            coursera:[
-              {name:"IBM Data Analyst",detail:"Python, bases de datos, Cognos.",badge:"IBM"},
-              {name:"Statistics with Python",detail:"Inferencial, Modelos. Clave para algoritmos.",badge:"UMich"},
-            ],
-            freeResources:[
-              "Power BI Desktop (Gratis)",
-              "StatQuest (YouTube)",
-              "TradingView Pine Script Docs",
-            ],
-            traderParallel:"La estadística de analista es la misma para validar sistemas de trading (Monte Carlo, regresión).",
-            project:{
-              title:"Proyecto 2: A/B Testing + Dashboard",
-              description:"Analiza un A/B test. Calcula significancia. Crea dashboard Power BI. Trader: Backtest estrategia, extrae datos, valida con t-test.",
-              analystValue:"Demuestra: A/B Testing, estadística inferencial, Power BI.",
-              traderValue:"Demuestra: Validación cuantitativa y gestión de riesgo empírica."
-            },
-            milestone:"Resolver SQL Medium, crear dashboards, aplicar t-test, y backtest validado en trading."
-          },
-          {
-            id:3, title:"AVANZADO", subtitle:"Competente → Profesional", duration:"Meses 7-9", color:"#F59E0B", dark:"#451A03", icon:"🔥",
-            description:"Machine Learning, automatización, y proyectos de nivel senior. El punto de quiebre.",
-            skills:["Machine Learning","Feature Engineering","Automatización","APIs","Portfolio"],
-            dailyRoutine:{
-              total:"3-3.5 hrs/día",
-              blocks:[
-                {time:"50 min",what:"Machine Learning (Stanford)",how:"Supervised, Unsupervised learning. Applied Data Science."},
-                {time:"40 min",what:"ML Proyectos Reales",how:"Clasificación (Random Forest) → Regresión → Clustering."},
-                {time:"30 min",what:"Automatización + APIs",how:"Python scripts, Webhooks, TradingView a Python."},
-                {time:"25 min",what:"Portfolio building",how:"READMEs limpios, notebooks documentados, GitHub Pages."},
-                {time:"20 min",what:"Casos de Negocio",how:"Simulaciones con IA de problemas reales empresariales."},
-              ]
-            },
-            geminiPrompts:[
-              {label:"Case Study",prompt:"Act as VP of Marketing. Present me a retention problem. I'll propose an ML analysis plan."},
-              {label:"Model Defense",prompt:"I built a Random Forest (78% acc). Challenge me on trade-offs, feature engineering, and limitations."},
-              {label:"Trading Architecture",prompt:"Design architecture for an automated futures system. Data pipeline -> Signals -> Execution."},
-            ],
-            coursera:[
-              {name:"Machine Learning Specialization",detail:"El gold standard de Andrew Ng (Stanford).",badge:"Stanford"},
-              {name:"Applied Data Science with Python",detail:"Texto, gráficos de red, machine learning práctico.",badge:"UMich"},
-            ],
-            freeResources:[
-              "Kaggle Competitions",
-              "Scikit-learn docs",
-              "Streamlit (App deployment en minutos)",
-            ],
-            traderParallel:"ML en trading: clasificar setups con XGBoost, detectar regímenes con Clustering.",
-            project:{
-              title:"Proyecto 3: ML End-to-End",
-              description:"Modelo de predicción (churn o ingresos). Limpieza, tuning, y app en Streamlit. Trader: Clasificador ML de setups ganadores.",
-              analystValue:"Portfolio killer. Muestra el pipeline completo.",
-              traderValue:"Sistema cuantitativo robusto filtrado por IA."
-            },
-            milestone:"Modelos ML funcionales, 4+ proyectos publicados, portfolio web online."
-          },
-          {
-            id:4, title:"PROFESIONAL", subtitle:"Job-Ready + Autónomo", duration:"Meses 10-12", color:"#10B981", dark:"#052E16", icon:"👑",
-            description:"Certificaciones finales, networking, y trading sistemático en vivo (micros).",
-            skills:["Data Storytelling","Entrevistas","Networking","Trading Live","Nicho"],
-            dailyRoutine:{
-              total:"3 hrs/día",
-              blocks:[
-                {time:"40 min",what:"Capstone + Polish",how:"Pulir todo el portfolio. Visualizaciones impecables."},
-                {time:"30 min",what:"Entrevistas Intensivas",how:"LeetCode diario, método STAR para behavioral."},
-                {time:"30 min",what:"Networking",how:"Aplicar, postear en LinkedIn, adaptar CV al keyword matching."},
-                {time:"30 min",what:"Especialización",how:"Elegir nicho (FinTech, E-commerce) y hacer un proyecto top."},
-                {time:"30 min",what:"Trading — Micros",how:"Transición a cuenta real con micro contratos. Tracker en Python."},
-              ]
-            },
-            geminiPrompts:[
-              {label:"Full Interview",prompt:"Conduct a full 45-min interview: SQL live, Python data task, and case study. Score me 1-10."},
-              {label:"Resume Review",prompt:"Review my resume/LinkedIn. Check ATS compatibility and impact metrics."},
-              {label:"Trading Review",prompt:"Review my weekly trading metrics. Evaluate risk, deviation from system, and psychology."},
-            ],
-            coursera:[
-              {name:"Google Advanced Data Analytics",detail:"Proyecto Capstone de graduación.",badge:"Google"},
-              {name:"Data Analysis Presentation",detail:"Data storytelling de PwC.",badge:"PwC"},
-            ],
-            freeResources:[
-              "GitHub Pages",
-              "Pramp.com (Mock interviews)",
-              "DataLemur (SQL de FAANG)",
-            ],
-            traderParallel:"Tu tracker de métricas de trading automatizado ES tu proyecto top de analista.",
-            project:{
-              title:"Proyectos 4-6: Capstone + Live Dashboard",
-              description:"Capstone de tu nicho. Dashboard web trackeando tus resultados de trading en vivo en Python.",
-              analystValue:"Portafolio masivo y maduro. Entrevistas garantizadas.",
-              traderValue:"Trader sistemático con pipeline de ejecución y métricas profesionales."
-            },
-            milestone:"6+ proyectos, certificaciones completas, red activa, operando micros consistentemente."
-          }
+            { id:1, title:"FUNDAMENTOS", subtitle:"Cero → Junior", duration:"Meses 1-3", color:"#06B6D4", dark:"#083344", icon:"🧱", description:"Construir la base técnica obligatoria. Sin SQL y Python, no existes ni como analista ni como trader algorítmico.", skills:["Python Core","Pandas/NumPy","SQL Fundamentos","Excel Avanzado","Git/GitHub"], dailyRoutine:{ total:"2.5-3 hrs/día", blocks:[ {time:"45 min",what:"Coursera — Google Data Analytics",how:"Curso 1-3. Tomar notas en propias palabras. Hacer quizzes sin mirar apuntes."}, {time:"40 min",what:"Python — Práctica con código real",how:"Sem 1-4: Core. Sem 5-8: Pandas/NumPy. Sem 9-12: Matplotlib/Seaborn. REGLA: nunca copies código sin entenderlo."}, {time:"35 min",what:"SQL — De cero a intermedio",how:"SQLBolt → HackerRank → LeetCode. Hasta Window Functions."}, {time:"15 min",what:"Anki — Repetición espaciada",how:"Flashcards de funciones Python y queries SQL."}, {time:"20 min",what:"Gemini Pro — Tutor personal",how:"Tutor para dudas y simulador de quizzes."} ] }, geminiPrompts:[ {label:"Tutor de Python",prompt:"I'm learning Python for data analysis. Test my understanding: give me 5 coding challenges..."}, {label:"SQL Interview Prep",prompt:"Act as a senior data analyst interviewing me. Give me a SQL problem..."}, {label:"Code Review",prompt:"Review this code. Explain what's wrong, correct approach, edge cases..."} ], coursera:[ {name:"Google Data Analytics Professional Certificate",detail:"Cursos 1-3. Foundations + Ask + Prepare.",badge:"Google"}, {name:"Python for Everybody (U. Michigan)",detail:"Base sólida de Python.",badge:"UMich"} ], freeResources:[ "SQLBolt — tutorial interactivo","Kaggle Learn — Pandas, ML gratis","Google Colab — IDE nube gratis","HackerRank SQL","CS50 de Harvard (YouTube)" ], traderParallel:"Mientras estudias Python y estadística, aplica TODO al mercado: descarga datos con yfinance, calcula indicadores, visualiza velas.", project:{ title:"Proyecto 1: Análisis Exploratorio de Datos", description:"Descarga datos de ES/NQ/BTC. Limpia datos. Calcula retornos, volatilidad, correlación. Publica en GitHub.", analystValue:"Demuestra: Python, Pandas, EDA, GitHub.", traderValue:"Demuestra: Análisis cuantitativo de mercados." }, milestone:"Escribir queries SQL con JOINs, manipular DataFrames en Pandas, crear visualizaciones, 1er proyecto en GitHub." },
+            { id:2, title:"INTERMEDIO", subtitle:"Junior → Competente", duration:"Meses 4-6", color:"#8B5CF6", dark:"#2E1065", icon:"⚡", description:"Estadística, visualización avanzada, y las herramientas que te hacen contratable.", skills:["Estadística Aplicada","Power BI / Tableau","Pine Script","Backtesting","A/B Testing"], dailyRoutine:{ total:"3 hrs/día", blocks:[ {time:"45 min",what:"Coursera — IBM Data Analyst",how:"Python avanzado, Cognos + Statistics with Python en paralelo."}, {time:"40 min",what:"Estadística + Probabilidad",how:"Descriptiva, Inferencial, Regresión, A/B Testing. Todo en Python."}, {time:"30 min",what:"BI Tool (Analista) / Pine Script (Trader)",how:"Power BI Desktop (Analista) / Pine Script v6 (Trader)."}, {time:"25 min",what:"SQL Avanzado",how:"LeetCode Medium/Hard. CTEs, optimización."}, {time:"20 min",what:"Gemini Pro — Entrevistas",how:"Mock interviews analista y análisis de trading."} ] }, geminiPrompts:[ {label:"Mock Interview Analista",prompt:"Conduct a full 30-min interview. SQL, Python, communication..."}, {label:"Estadística para Trading",prompt:"I have a strategy: 55% win rate. Calculate expectancy, Monte Carlo, t-test..."}, {label:"Dashboard Review",prompt:"Critique my Power BI dashboard. KPIs, layout, colors, DAX..."} ], coursera:[ {name:"IBM Data Analyst",detail:"Cursos 4-8. Bases de datos, visualización.",badge:"IBM"}, {name:"Statistics with Python (U. Michigan)",detail:"Tu base estadística completa.",badge:"UMich"}, {name:"Microsoft Power BI Data Analyst",detail:"Certificación oficial Microsoft.",badge:"Microsoft"} ], freeResources:[ "Power BI Desktop (Gratis)","LeetCode SQL","StatQuest (YouTube)","TradingView Pine Script docs","Mode Analytics SQL Tutorial" ], traderParallel:"La estadística para analista ES la misma para validar estrategias de trading. T-test, Monte Carlo, regresión.", project:{ title:"Proyecto 2: A/B Testing + Dashboard", description:"Analista: A/B testing con dataset de Kaggle + Dashboard Power BI. Trader: Backtest estrategia Pine Script, análisis Python, t-test.", analystValue:"Demuestra: Estadística, A/B testing, Power BI.", traderValue:"Demuestra: Rigor científico, validación cuantitativa." }, milestone:"Resolver SQL Medium, crear dashboards Power BI, aplicar t-test, 2 proyectos GitHub." },
+            { id:3, title:"AVANZADO", subtitle:"Competente → Profesional", duration:"Meses 7-9", color:"#F59E0B", dark:"#451A03", icon:"🔥", description:"Machine Learning, automatización, y proyectos de nivel senior.", skills:["Machine Learning","Feature Engineering","Automatización","NLP Básico","Portfolio Profesional"], dailyRoutine:{ total:"3-3.5 hrs/día", blocks:[ {time:"50 min",what:"Coursera — ML + Data Science",how:"Machine Learning Specialization (Stanford)."}, {time:"40 min",what:"ML Aplicado",how:"Clasificación, Regresión, Clustering. EDA riguroso."}, {time:"30 min",what:"Automatización + APIs",how:"Python scripts, webhooks, BeautifulSoup, APIs."}, {time:"25 min",what:"Portfolio building",how:"READMEs perfectos, GitHub Pages, optimizar LinkedIn."}, {time:"20 min",what:"Gemini Pro — Nivel Senior",how:"Casos de negocio complejos, trade-offs técnicos."} ] }, geminiPrompts:[ {label:"Case Study Business",prompt:"Act as VP of Marketing. Present a retention problem, let me analyze and pitch..."}, {label:"ML Model Defense",prompt:"I built a Random Forest. Challenge me on algorithm choice, imbalance, features..."}, {label:"Trading System Architecture",prompt:"Design an automated trading system. Data pipeline, signals, risk..."} ], coursera:[ {name:"Machine Learning Specialization",detail:"Andrew Ng. El gold standard.",badge:"Stanford"}, {name:"Applied Data Science (U. Michigan)",detail:"5 cursos prácticos.",badge:"UMich"}, {name:"Google Advanced Data Analytics",detail:"Analítica predictiva.",badge:"Google"} ], freeResources:[ "Kaggle Competitions","fast.ai","Scikit-learn docs","Papers With Code","Streamlit (Web apps rápidas)" ], traderParallel:"ML aplicado a trading: clasificador de setups, detección de regímenes (clustering).", project:{ title:"Proyecto 3: ML End-to-End + Algo Trading", description:"Analista: Predicción de churn con RF/XGBoost. Streamlit app. Trader: Clasificador ML de trades + Python backtesting.", analystValue:"Pipeline completo, listo para contratación.", traderValue:"Sistema cuantitativo profesional con feature importance." }, milestone:"Modelos ML end-to-end, 4+ proyectos GitHub, portfolio web, sistema cuantitativo validado." },
+            { id:4, title:"PROFESIONAL", subtitle:"Job-Ready + Trader Autónomo", duration:"Meses 10-12", color:"#10B981", dark:"#052E16", icon:"👑", description:"Certificaciones finales, portfolio pulido, empleo y trading real.", skills:["Data Storytelling","Entrevistas","Networking","Trading en Vivo","Especialización"], dailyRoutine:{ total:"3 hrs/día", blocks:[ {time:"40 min",what:"Capstone Projects + Polish",how:"Completar Capstones. Pulir GitHub y portfolio web."}, {time:"30 min",what:"Interview Prep",how:"Mock interviews, SQL live coding, LeetCode."}, {time:"30 min",what:"Networking",how:"LinkedIn content, aplicar a vacantes, personalizar CV."}, {time:"30 min",what:"Especialización",how:"Nicho: FinTech, E-commerce, etc. Proyecto específico."}, {time:"30 min",what:"Trading en Vivo",how:"Micros (MES/MNQ). Tracking estricto con Python."} ] }, geminiPrompts:[ {label:"Full Mock Interview",prompt:"Complete 45-min interview. Intro, live SQL, Python, case study..."}, {label:"Resume/LinkedIn Review",prompt:"Review my resume. ATS check, impact focus, technical optimization..."}, {label:"Trading Review Session",prompt:"Act as mentor. Review my metrics, psychology, risk..."} ], coursera:[ {name:"Google Advanced Data Analytics",detail:"Capstone final.",badge:"Google"}, {name:"Excel to MySQL: Analytic Techniques",detail:"Duke University.",badge:"Duke"}, {name:"Data Analysis & Presentation Skills",detail:"PwC. Soft skills vitales.",badge:"PwC"} ], freeResources:[ "GitHub Pages","EF SET (Inglés)","Pramp (Mock interviews)","DataLemur (SQL FAANG)","Tradovate/AMP Futures (Micros)" ], traderParallel:"Tu sistema de tracking en Python ES tu mejor portfolio project para entrevistas.", project:{ title:"Proyecto 4-6: Especialización + Trading Dashboard", description:"Capstone de nicho, Dashboard automatizado de trading (Python), Análisis Open Source.", analystValue:"6+ proyectos, red activa, entrevistas reales.", traderValue:"Operando micros, sistema validado, tracking profesional." }, milestone:"Portfolio masivo, 3 certificaciones completas, operando capital real con disciplina estadística." }
         ];
 
-        function ResearchCard({ r, isOpen, onToggle }) {
-          return (
-            <div style={{background:"#111119",borderRadius:12,border:`1px solid ${isOpen?"#06B6D4":"#1e1e2e"}`,overflow:"hidden",transition:".3s"}}>
-              <button onClick={onToggle} style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",padding:"12px 14px",background:"transparent",border:"none",cursor:"pointer",color:"#e8e8ed",textAlign:"left"}}>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:14,fontWeight:700}}>{r.title}</div>
-                  <div style={{fontSize:9,color:"#06B6D4",fontFamily:"'JetBrains Mono',monospace",marginTop:2}}>{r.citation}</div>
-                </div>
-                <span style={{color:"#06B6D4",fontSize:18,transform:isOpen?"rotate(45deg)":"none",transition:".3s",flexShrink:0,marginLeft:8}}>+</span>
-              </button>
-              {isOpen && <div style={{padding:"0 14px 14px"}}>
-                <div style={{background:"rgba(6,182,212,.06)",borderLeft:"3px solid #06B6D4",borderRadius:"0 8px 8px 0",padding:"10px 12px",marginBottom:8}}>
-                  <div style={{fontSize:9,fontWeight:700,color:"#06B6D4",letterSpacing:1,marginBottom:4,fontFamily:"'JetBrains Mono',monospace"}}>📊 HALLAZGO</div>
-                  <div style={{fontSize:12.5,color:"#b0b0b8",lineHeight:1.6}}>{r.finding}</div>
-                </div>
-                <div style={{background:"rgba(16,185,129,.06)",borderLeft:"3px solid #10B981",borderRadius:"0 8px 8px 0",padding:"10px 12px"}}>
-                  <div style={{fontSize:9,fontWeight:700,color:"#10B981",letterSpacing:1,marginBottom:4,fontFamily:"'JetBrains Mono',monospace"}}>🛠 APLICACIÓN</div>
-                  <div style={{fontSize:12.5,color:"#b0b0b8",lineHeight:1.6}}>{r.application}</div>
-                </div>
-              </div>}
-            </div>
-          );
+        let activePhase = 0;
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            renderResearch();
+            renderMarket();
+            renderTabs();
+            updatePhaseView();
+            registerPWA();
+        });
+
+        // UI Toggles
+        function toggleMain(section) {
+            const content = document.getElementById(`${section}-main-content`);
+            const icon = document.getElementById(`${section}-main-icon`);
+            content.classList.toggle('show');
+            icon.classList.toggle('open');
+            if(section === 'research') {
+                document.getElementById('research-main-card').style.borderColor = content.classList.contains('show') ? 'var(--cyan)' : 'var(--border)';
+            }
         }
 
-        function Section({title,sKey,color,children,openSections,toggle}){
-          const isOpen=openSections[sKey];
-          return(
-            <div style={{background:"#111119",borderRadius:14,border:`1px solid ${isOpen?color:"#1e1e2e"}`,overflow:"hidden",marginBottom:10,transition:".3s"}}>
-              <button onClick={()=>toggle(sKey)} style={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center",padding:"14px 16px",background:"transparent",border:"none",cursor:"pointer",color:"#e8e8ed",textAlign:"left"}}>
-                <span style={{fontSize:14,fontWeight:700}}>{title}</span>
-                <span style={{color,fontSize:18,transform:isOpen?"rotate(45deg)":"none",transition:".3s"}}>+</span>
-              </button>
-              {isOpen && <div style={{padding:"0 16px 16px"}}>{children}</div>}
-            </div>
-          );
+        function toggleSub(type, id, color) {
+            const content = document.getElementById(`${type}-content-${id}`);
+            const icon = document.getElementById(`${type}-icon-${id}`);
+            const card = document.getElementById(`${type}-card-${id}`);
+            
+            const isOpen = content.classList.toggle('show');
+            icon.classList.toggle('open');
+            card.style.borderColor = isOpen ? color : 'var(--border)';
+            if(type !== 'research') {
+                icon.style.color = isOpen ? color : '#888';
+            }
         }
 
-        function PhaseView({phase}){
-          const [os,setOs]=useState({});
-          const toggle=k=>setOs(p=>({...p,[k]:!p[k]}));
-          const S=({title,sKey,color,children})=><Section title={title} sKey={sKey} color={color} children={children} openSections={os} toggle={toggle}/>;
-
-          return(<div>
-            <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:14}}>
-              {phase.skills.map(s=><span key={s} style={{fontSize:10,fontWeight:600,padding:"4px 10px",borderRadius:6,background:`${phase.color}12`,border:`1px solid ${phase.color}25`,color:phase.color,fontFamily:"'JetBrains Mono',monospace"}}>{s}</span>)}
-            </div>
-
-            <S title={`📅 Rutina Diaria (${phase.dailyRoutine.total})`} sKey="routine" color={phase.color}>
-              {phase.dailyRoutine.blocks.map((b,i)=>(
-                <div key={i} style={{display:"flex",gap:10,marginBottom:14,paddingBottom:14,borderBottom:i<phase.dailyRoutine.blocks.length-1?"1px solid #1e1e2e":"none"}}>
-                  <div style={{minWidth:52,fontSize:11,fontWeight:700,color:phase.color,fontFamily:"'JetBrains Mono',monospace",paddingTop:2}}>{b.time}</div>
-                  <div><div style={{fontSize:13,fontWeight:700,marginBottom:4}}>{b.what}</div><div style={{fontSize:12,color:"#a0a0b0",lineHeight:1.65}}>{b.how}</div></div>
+        // Render Functions
+        function renderResearch() {
+            const list = document.getElementById('research-list');
+            list.innerHTML = RESEARCH.map((r, i) => `
+                <div class="research-card" id="research-card-${i}">
+                    <button class="accordion-btn" onclick="toggleSub('research', ${i}, 'var(--cyan)')" style="padding:12px 14px;">
+                        <div style="flex:1;">
+                            <div style="font-size:14px; font-weight:700;">${r.title}</div>
+                            <div class="mono" style="font-size:9px; color:var(--cyan); margin-top:2px;">${r.citation}</div>
+                        </div>
+                        <span class="accordion-icon" id="research-icon-${i}" style="color:var(--cyan); margin-left:8px;">+</span>
+                    </button>
+                    <div class="research-content" id="research-content-${i}">
+                        <div style="background:rgba(6,182,212,.06); border-left:3px solid var(--cyan); border-radius:0 8px 8px 0; padding:10px 12px; margin-bottom:8px;">
+                            <div class="mono" style="font-size:9px; font-weight:700; color:var(--cyan); letter-spacing:1px; margin-bottom:4px;">📊 HALLAZGO</div>
+                            <div style="font-size:12.5px; color:#b0b0b8; line-height:1.6;">${r.finding}</div>
+                        </div>
+                        <div style="background:rgba(16,185,129,.06); border-left:3px solid var(--emerald); border-radius:0 8px 8px 0; padding:10px 12px;">
+                            <div class="mono" style="font-size:9px; font-weight:700; color:var(--emerald); letter-spacing:1px; margin-bottom:4px;">🛠 APLICACIÓN</div>
+                            <div style="font-size:12.5px; color:#b0b0b8; line-height:1.6;">${r.application}</div>
+                        </div>
+                    </div>
                 </div>
-              ))}
-            </S>
-
-            <S title="🤖 Prompts para IA" sKey="prompts" color="#A855F7">
-              {phase.geminiPrompts.map((p,i)=>(
-                <div key={i} style={{background:"rgba(168,85,247,.06)",borderLeft:"3px solid #a855f7",borderRadius:"0 10px 10px 0",padding:"14px 16px",marginBottom:10}}>
-                  <div style={{fontSize:9,fontWeight:700,color:"#a855f7",letterSpacing:1.5,marginBottom:6,fontFamily:"'JetBrains Mono',monospace"}}>🤖 {p.label}</div>
-                  <div style={{fontSize:11.5,lineHeight:1.65,color:"#c8b4ff",fontFamily:"'JetBrains Mono',monospace",background:"rgba(0,0,0,.25)",padding:12,borderRadius:8,whiteSpace:"pre-wrap"}}>{p.prompt}</div>
-                </div>
-              ))}
-            </S>
-
-            <S title="🎓 Certificaciones" sKey="coursera" color="#2563EB">
-              {phase.coursera.map((c,i)=>(
-                <div key={i} style={{background:"rgba(37,99,246,.06)",border:"1px solid rgba(37,99,246,.15)",borderRadius:10,padding:"12px 14px",marginBottom:8}}>
-                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                    <div style={{fontSize:13,fontWeight:700,color:"#93c5fd"}}>{c.name}</div>
-                    <span style={{fontSize:9,fontWeight:700,padding:"2px 8px",borderRadius:4,background:"rgba(37,99,246,.15)",color:"#60a5fa",fontFamily:"'JetBrains Mono',monospace"}}>{c.badge}</span>
-                  </div>
-                  <div style={{fontSize:11.5,color:"#8090b0",lineHeight:1.5,marginTop:4}}>{c.detail}</div>
-                </div>
-              ))}
-            </S>
-
-            <S title="🔗 Recursos Gratuitos" sKey="free" color="#F59E0B">
-              {phase.freeResources.map((r,i)=>(
-                <div key={i} style={{fontSize:12,color:"#fcd34d",lineHeight:1.6,marginBottom:6,paddingLeft:12,borderLeft:"2px solid rgba(245,158,11,.3)"}}>{r}</div>
-              ))}
-            </S>
-
-            <S title="📈 Paralelo Trading" sKey="trader" color="#EF4444">
-              <div style={{fontSize:13,color:"#fca5a5",lineHeight:1.7,background:"rgba(239,68,68,.06)",padding:12,borderRadius:10}}>{phase.traderParallel}</div>
-            </S>
-
-            <S title="🏆 Proyecto Validador" sKey="project" color="#10B981">
-              <div style={{fontSize:15,fontWeight:700,marginBottom:8,color:"#10b981"}}>{phase.project.title}</div>
-              <div style={{fontSize:12.5,color:"#b0b0b8",lineHeight:1.7,marginBottom:12}}>{phase.project.description}</div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
-                <div style={{background:"rgba(59,130,246,.06)",border:"1px solid rgba(59,130,246,.15)",borderRadius:8,padding:"10px 12px"}}>
-                  <div style={{fontSize:9,fontWeight:700,color:"#3b82f6",letterSpacing:1,marginBottom:4,fontFamily:"'JetBrains Mono',monospace"}}>💼 ANALISTA</div>
-                  <div style={{fontSize:11,color:"#93c5fd",lineHeight:1.5}}>{phase.project.analystValue}</div>
-                </div>
-                <div style={{background:"rgba(239,68,68,.06)",border:"1px solid rgba(239,68,68,.15)",borderRadius:8,padding:"10px 12px"}}>
-                  <div style={{fontSize:9,fontWeight:700,color:"#ef4444",letterSpacing:1,marginBottom:4,fontFamily:"'JetBrains Mono',monospace"}}>📈 TRADER</div>
-                  <div style={{fontSize:11,color:"#fca5a5",lineHeight:1.5}}>{phase.project.traderValue}</div>
-                </div>
-              </div>
-            </S>
-
-            <div style={{background:"linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08))",border:"1px solid rgba(16,185,129,.2)",borderRadius:14,padding:16,marginTop:10}}>
-              <div style={{fontSize:9,fontWeight:700,color:"#10b981",letterSpacing:2,marginBottom:6,fontFamily:"'JetBrains Mono',monospace"}}>🎯 CHECKPOINT</div>
-              <div style={{fontSize:13,color:"#d0d0d8",lineHeight:1.7}}>{phase.milestone}</div>
-            </div>
-          </div>);
+            `).join('');
         }
 
-        function UltimateRoadmap() {
-          const [activePhase,setActivePhase]=useState(0);
-          const [showResearch,setShowResearch]=useState(false);
-          const [showMarket,setShowMarket]=useState(false);
-          const [openResearch,setOpenResearch]=useState({});
-          const phase=PHASES[activePhase];
-
-          return(
-            <div style={{paddingBottom:"70px"}}>
-              {/* HEADER */}
-              <div style={{padding:"36px 16px 28px",textAlign:"center",borderBottom:"1px solid #1e1e2e",background:"linear-gradient(180deg,#0F0F1A,#0A0A0F)"}}>
-                <div style={{fontSize:9,letterSpacing:5,color:"#6b6b80",fontWeight:700,fontFamily:"'JetBrains Mono',monospace",marginBottom:14}}>EVIDENCE-DRIVEN · 2026</div>
-                <h1 style={{fontSize:"clamp(20px,5vw,32px)",fontWeight:800,margin:"0 0 6px",lineHeight:1.15,letterSpacing:"-0.5px"}}>
-                  <span style={{color:"#3B82F6"}}>Data Analyst</span> + <span style={{color:"#EF4444"}}>Algo Trader</span>
-                </h1>
-                <p style={{fontSize:12.5,color:"#6b6b80",margin:"8px auto 0",maxWidth:440,lineHeight:1.5}}>
-                  12 meses · 6 principios científicos · 6+ proyectos · 3 certificaciones
-                </p>
-                <div style={{display:"flex",justifyContent:"center",gap:6,marginTop:16,flexWrap:"wrap"}}>
-                  {["Coursera+","IA Prompts","Kaggle","GitHub","Colab"].map(t=>(
-                    <span key={t} style={{fontSize:9,fontWeight:600,padding:"4px 10px",borderRadius:16,background:"rgba(139,92,246,.08)",border:"1px solid rgba(139,92,246,.2)",color:"#a78bfa",fontFamily:"'JetBrains Mono',monospace"}}>{t}</span>
-                  ))}
+        function renderMarket() {
+            document.getElementById('market-stats').innerHTML = JOB_MARKET.stats.map(s => `
+                <div style="background:#111119; border-radius:10px; padding:12px; border:1px solid ${s.color}20; text-align:center;">
+                    <div style="font-size:22px; font-weight:800; color:${s.color};">${s.stat}</div>
+                    <div style="font-size:10px; color:#8090a0; line-height:1.4; margin-top:4px;">${s.desc}</div>
                 </div>
-              </div>
+            `).join('');
+            document.getElementById('market-stack').innerText = JOB_MARKET.stack;
+            document.getElementById('market-source').innerText = JOB_MARKET.source;
+        }
 
-              {/* RESEARCH & MARKET */}
-              <div style={{padding:"16px 16px 6px"}}>
-                <button onClick={()=>setShowResearch(!showResearch)} style={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center",padding:"14px 16px",borderRadius:14,background:"#111119",border:"1px solid #1e1e2e",cursor:"pointer",color:"#e8e8ed"}}>
-                  <div style={{textAlign:"left"}}><div style={{fontSize:15,fontWeight:700}}>🔬 Base Científica (6 principios)</div><div style={{fontSize:11,color:"#6b6b80",marginTop:2}}>Técnicas de estudio cognitivo</div></div>
-                  <span style={{color:"#888",fontSize:18,transform:showResearch?"rotate(45deg)":"none",transition:".3s"}}>+</span>
+        function renderTabs() {
+            const container = document.getElementById('tabs-container');
+            container.innerHTML = PHASES.map((p, i) => `
+                <button class="tab-btn" 
+                        style="${i === activePhase ? `background:${p.dark}; border-color:${p.color}; color:${p.color};` : ''}"
+                        onclick="setPhase(${i})">
+                    <span style="font-size:20px; margin-bottom:4px;">${p.icon}</span>
+                    <span class="mono" style="font-size:10px; font-weight:700;">F${p.id}</span>
                 </button>
-                {showResearch&&<div style={{display:"flex",flexDirection:"column",gap:8,marginTop:10}}>
-                  {RESEARCH.map((r,i)=><ResearchCard key={i} r={r} isOpen={!!openResearch[i]} onToggle={()=>setOpenResearch(p=>({...p,[i]:!p[i]}))}/>)}
-                </div>}
-              </div>
-
-              <div style={{padding:"10px 16px 6px"}}>
-                <button onClick={()=>setShowMarket(!showMarket)} style={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center",padding:"14px 16px",borderRadius:14,background:"#111119",border:"1px solid #1e1e2e",cursor:"pointer",color:"#e8e8ed"}}>
-                  <div style={{textAlign:"left"}}><div style={{fontSize:15,fontWeight:700}}>📊 Mercado Laboral 2026</div><div style={{fontSize:11,color:"#6b6b80",marginTop:2}}>Datos reales de BLS y WEF</div></div>
-                  <span style={{color:"#888",fontSize:18,transform:showMarket?"rotate(45deg)":"none",transition:".3s"}}>+</span>
-                </button>
-                {showMarket&&<div style={{marginTop:10}}>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:10}}>
-                    {JOB_MARKET.stats.map((s,i)=>(
-                      <div key={i} style={{background:"#111119",borderRadius:10,padding:"12px",border:`1px solid ${s.color}20`,textAlign:"center"}}>
-                        <div style={{fontSize:22,fontWeight:800,color:s.color}}>{s.stat}</div>
-                        <div style={{fontSize:10,color:"#8090a0",lineHeight:1.4,marginTop:4}}>{s.desc}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{background:"rgba(139,92,246,.06)",border:"1px solid rgba(139,92,246,.15)",borderRadius:10,padding:12}}>
-                    <div style={{fontSize:9,fontWeight:700,color:"#a78bfa",letterSpacing:1,marginBottom:4,fontFamily:"'JetBrains Mono',monospace"}}>STACK REQUERIDO</div>
-                    <div style={{fontSize:12,color:"#c4b5fd",lineHeight:1.6}}>{JOB_MARKET.stack}</div>
-                  </div>
-                </div>}
-              </div>
-
-              {/* TABS */}
-              <div style={{display:"flex",gap:6,padding:"16px",overflowX:"auto",WebkitOverflowScrolling:"touch",scrollbarWidth:"none"}}>
-                {PHASES.map((p,i)=>(
-                  <button key={p.id} onClick={()=>setActivePhase(i)} style={{
-                    flex:"0 0 auto",display:"flex",flexDirection:"column",alignItems:"center",
-                    padding:"12px 14px",borderRadius:12,minWidth:78,
-                    background:i===activePhase?p.dark:"#111119",
-                    border:`1.5px solid ${i===activePhase?p.color:"#1e1e2e"}`,
-                    cursor:"pointer",color:i===activePhase?p.color:"#6b6b80",transition:".25s"
-                  }}>
-                    <span style={{fontSize:20,marginBottom:4}}>{p.icon}</span>
-                    <span style={{fontSize:10,fontWeight:700,fontFamily:"'JetBrains Mono',monospace"}}>F{p.id}</span>
-                  </button>
-                ))}
-              </div>
-
-              <div style={{padding:"4px 16px 16px"}}>
-                <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:8}}>
-                  <div style={{width:48,height:48,borderRadius:12,background:phase.dark,border:`1.5px solid ${phase.color}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:24}}>{phase.icon}</div>
-                  <div>
-                    <h2 style={{margin:0,fontSize:20,fontWeight:800,letterSpacing:"-0.5px"}}>Fase {phase.id}: {phase.title}</h2>
-                    <div style={{fontSize:12,color:phase.color,fontWeight:600,fontFamily:"'JetBrains Mono',monospace"}}>{phase.subtitle} · {phase.duration}</div>
-                  </div>
-                </div>
-                <p style={{fontSize:13,color:"#a0a0b0",lineHeight:1.6,margin:"8px 0 0"}}>{phase.description}</p>
-              </div>
-
-              <div style={{padding:"0 16px 30px"}}><PhaseView phase={phase}/></div>
-
-              {/* BARRA DE PROGRESO INFERIOR (Sticky) */}
-              <div style={{position:"fixed",bottom:0,left:0,right:0,background:"#0A0A0F",borderTop:"1px solid #1e1e2e",padding:"16px",display:"flex",alignItems:"center",gap:10,zIndex:100}}>
-                <div style={{fontSize:11,color:"#6b6b80",fontFamily:"'JetBrains Mono',monospace",whiteSpace:"nowrap"}}>F{activePhase+1}/4</div>
-                <div style={{flex:1,height:4,background:"#1e1e2e",borderRadius:2,overflow:"hidden"}}>
-                  <div style={{height:"100%",borderRadius:2,width:`${((activePhase+1)/4)*100}%`,background:`linear-gradient(90deg,#06B6D4,${phase.color})`,transition:"width .4s"}}/>
-                </div>
-                <div style={{fontSize:11,color:phase.color,fontWeight:700,fontFamily:"'JetBrains Mono',monospace"}}>{["Fundamentos","Intermedio","Avanzado","Profesional"][activePhase]}</div>
-              </div>
-            </div>
-          );
+            `).join('');
         }
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<UltimateRoadmap />);
+        function setPhase(index) {
+            activePhase = index;
+            renderTabs();
+            updatePhaseView();
+        }
+
+        // Helper to generate phase accordions
+        function buildSectionHTML(id, title, color, innerContent) {
+            return `
+                <div class="card-container" id="phase-card-${id}">
+                    <button class="accordion-btn" onclick="toggleSub('phase', '${id}', '${color}')">
+                        <span style="font-size:14px; font-weight:700;">${title}</span>
+                        <span class="accordion-icon" id="phase-icon-${id}">+</span>
+                    </button>
+                    <div class="card-content" id="phase-content-${id}">${innerContent}</div>
+                </div>
+            `;
+        }
+
+        function updatePhaseView() {
+            const p = PHASES[activePhase];
+            const area = document.getElementById('phase-content-area');
+            
+            // Phase Header & Skills
+            let html = `
+                <div style="padding:4px 0 16px;">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+                        <div style="width:48px; height:48px; border-radius:12px; background:${p.dark}; border:1.5px solid ${p.color}; display:flex; align-items:center; justify-content:center; font-size:24px;">${p.icon}</div>
+                        <div>
+                            <h2 style="margin:0; font-size:20px; font-weight:800; letter-spacing:-0.5px;">Fase ${p.id}: ${p.title}</h2>
+                            <div class="mono" style="font-size:12px; color:${p.color}; font-weight:600;">${p.subtitle} · ${p.duration}</div>
+                        </div>
+                    </div>
+                    <p style="font-size:13px; color:var(--text-light); line-height:1.6; margin:8px 0 14px;">${p.description}</p>
+                    
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                        ${p.skills.map(s => `<span class="mono" style="font-size:10px; font-weight:600; padding:4px 10px; border-radius:6px; background:${p.color}12; border:1px solid ${p.color}25; color:${p.color};">${s}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Routine
+            const routineHTML = p.dailyRoutine.blocks.map((b, i) => `
+                <div style="display:flex; gap:10px; margin-bottom:14px; padding-bottom:14px; border-bottom:${i < p.dailyRoutine.blocks.length-1 ? '1px solid var(--border)' : 'none'};">
+                    <div class="mono" style="min-width:52px; font-size:11px; font-weight:700; color:${p.color}; padding-top:2px;">${b.time}</div>
+                    <div>
+                        <div style="font-size:13px; font-weight:700; margin-bottom:4px;">${b.what}</div>
+                        <div style="font-size:12px; color:var(--text-light); line-height:1.65;">${b.how}</div>
+                    </div>
+                </div>
+            `).join('');
+            html += buildSectionHTML('routine', `📅 Rutina Diaria (${p.dailyRoutine.total})`, p.color, routineHTML);
+
+            // Prompts
+            const promptsHTML = p.geminiPrompts.map(pr => `
+                <div style="background:rgba(168,85,247,.06); border-left:3px solid var(--purple-light); border-radius:0 10px 10px 0; padding:14px 16px; margin-bottom:10px;">
+                    <div class="mono" style="font-size:9px; font-weight:700; color:var(--purple-light); letter-spacing:1.5px; margin-bottom:6px;">🤖 ${pr.label}</div>
+                    <div class="mono" style="font-size:11.5px; line-height:1.65; color:#c8b4ff; background:rgba(0,0,0,.25); padding:12px; border-radius:8px; white-space:pre-wrap;">${pr.prompt}</div>
+                </div>
+            `).join('');
+            html += buildSectionHTML('prompts', '🤖 Prompts Gemini Pro', 'var(--purple-light)', promptsHTML);
+
+            // Coursera
+            const courseraHTML = p.coursera.map(c => `
+                <div style="background:rgba(37,99,246,.06); border:1px solid rgba(37,99,246,.15); border-radius:10px; padding:12px 14px; margin-bottom:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="font-size:13px; font-weight:700; color:#93c5fd;">${c.name}</div>
+                        <span class="mono" style="font-size:9px; font-weight:700; padding:2px 8px; border-radius:4px; background:rgba(37,99,246,.15); color:#60a5fa;">${c.badge}</span>
+                    </div>
+                    <div style="font-size:11.5px; color:#8090b0; line-height:1.5; margin-top:4px;">${c.detail}</div>
+                </div>
+            `).join('');
+            html += buildSectionHTML('coursera', '🎓 Coursera Plus', '#2563EB', courseraHTML);
+
+            // Free Resources
+            const freeHTML = p.freeResources.map(r => `
+                <div style="font-size:12px; color:#fcd34d; line-height:1.6; margin-bottom:6px; padding-left:12px; border-left:2px solid rgba(245,158,11,.3);">${r}</div>
+            `).join('');
+            html += buildSectionHTML('free', '🔗 Recursos Gratuitos', 'var(--amber)', freeHTML);
+
+            // Trader Parallel
+            const traderHTML = `<div style="font-size:13px; color:#fca5a5; line-height:1.7; background:rgba(239,68,68,.06); padding:12px; border-radius:10px;">${p.traderParallel}</div>`;
+            html += buildSectionHTML('trader', '📈 Paralelo Trading', 'var(--red)', traderHTML);
+
+            // Project
+            const projectHTML = `
+                <div style="font-size:15px; font-weight:700; margin-bottom:8px; color:var(--emerald);">${p.project.title}</div>
+                <div style="font-size:12.5px; color:#b0b0b8; line-height:1.7; margin-bottom:12px;">${p.project.description}</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <div style="background:rgba(59,130,246,.06); border:1px solid rgba(59,130,246,.15); border-radius:8px; padding:10px 12px;">
+                        <div class="mono" style="font-size:9px; font-weight:700; color:var(--blue); letter-spacing:1px; margin-bottom:4px;">💼 VALOR ANALISTA</div>
+                        <div style="font-size:11px; color:#93c5fd; line-height:1.5;">${p.project.analystValue}</div>
+                    </div>
+                    <div style="background:rgba(239,68,68,.06); border:1px solid rgba(239,68,68,.15); border-radius:8px; padding:10px 12px;">
+                        <div class="mono" style="font-size:9px; font-weight:700; color:var(--red); letter-spacing:1px; margin-bottom:4px;">📈 VALOR TRADER</div>
+                        <div style="font-size:11px; color:#fca5a5; line-height:1.5;">${p.project.traderValue}</div>
+                    </div>
+                </div>
+            `;
+            html += buildSectionHTML('project', '🏆 Proyecto Validador', 'var(--emerald)', projectHTML);
+
+            // Milestone
+            html += `
+                <div style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08)); border:1px solid rgba(16,185,129,.2); border-radius:14px; padding:16px; margin-top:10px;">
+                    <div class="mono" style="font-size:9px; font-weight:700; color:var(--emerald); letter-spacing:2px; margin-bottom:6px;">🎯 CHECKPOINT DE FASE</div>
+                    <div style="font-size:13px; color:#d0d0d8; line-height:1.7;">${p.milestone}</div>
+                </div>
+            `;
+
+            area.innerHTML = html;
+
+            // Auto-open routine
+            toggleSub('phase', 'routine', p.color);
+
+            // Update Progress Bar
+            document.getElementById('progress-text').innerText = `F${activePhase+1}/4`;
+            const progressPct = ((activePhase+1)/4)*100;
+            document.getElementById('progress-fill').style.width = `${progressPct}%`;
+            document.getElementById('progress-fill').style.background = `linear-gradient(90deg, var(--cyan), ${p.color})`;
+            document.getElementById('progress-label').innerText = ["Cero→Jr", "Jr→Comp", "Comp→Pro", "Pro→Job"][activePhase];
+            document.getElementById('progress-label').style.color = p.color;
+        }
+
+        // PWA Service Worker Inline
+        function registerPWA() {
+            if ('serviceWorker' in navigator) {
+                const swContent = `
+                    const CACHE_NAME = 'datatrade-v1';
+                    self.addEventListener('install', (e) => self.skipWaiting());
+                    self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(fetch(e.request).catch(() => new Response('Offline Mode Active.')));
+                    });
+                `;
+                const blob = new Blob([swContent], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swUrl).then(() => {
+                    console.log('PWA Service Worker ready.');
+                }).catch(err => console.log('PWA SW failed:', err));
+            }
+        }
     </script>
 </body>
 </html>
