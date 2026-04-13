@@ -1,22 +1,24 @@
 {
-  "name": "Ultimate Analyst & Trader Roadmap",
+  "name": "Ultimate Data Analyst + Algo Trader",
   "short_name": "DataTrade",
-  "description": "Roadmap científico de 12 meses para Data Analytics y Algorithmic Trading",
+  "description": "Roadmap intensivo respaldado por ciencia para Data Analysts y Algo Traders.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0A0A0F",
   "theme_color": "#0A0A0F",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "https://raw.githubusercontent.com/felixdevim-prog/datatrade/main/Gemini_Generated_Image_ahwwjahwwjahwwja.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "https://raw.githubusercontent.com/felixdevim-prog/datatrade/main/Gemini_Generated_Image_ahwwjahwwjahwwja.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
