@@ -1,0 +1,228 @@
+import numpy as np
+import pandas as pd
+
+# ======================================================
+# ⚙️ CONFIGURACIÓN GENERAL
+# ======================================================
+CONFIG = {
+    "risk_per_trade": 0.0025,
+    "spread": 0.0003,
+    "rr_ratio": 2.0,
+    "n_montecarlo": 300,
+    "walk_forward_splits": 5,
+    "max_holding": 60,
+    "min_trades": 100,
+    "param_grid": {
+        "mult": np.linspace(1.5, 3.5, 5)
+    }
+}
+
+# ======================================================
+# 🧠 1. GENERADOR DE SEÑALES (IA)
+# ======================================================
+def generar_senales(df, mult=2.0):
+
+    # --- INICIO IDEA SINTÉTICA ---
+    df['senial'] = 0
+    # --- FIN IDEA SINTÉTICA ---
+
+    return df.copy()
+
+# ======================================================
+# ⚡ 2. EJECUCIÓN REALISTA
+# ======================================================
+def ejecutar_trades_fast(df):
+    risk = CONFIG["risk_per_trade"]
+    rr = CONFIG["rr_ratio"]
+    spread = CONFIG["spread"]
+    max_hold = CONFIG["max_holding"]
+
+    fechas = df.index.values
+    close = df['close'].values
+    high = df['high'].values
+    low = df['low'].values
+    signal = df['senial'].values
+
+    range_arr = (high - low)
+    avg_range = pd.Series(range_arr).rolling(20).mean().bfill().values
+
+    trades, fechas_trades = [], []
+    idx_signals = np.where(signal != 0)[0]
+
+    for i in idx_signals:
+        direction = signal[i]
+
+        slip = avg_range[i] * 0.1
+        entry = close[i] + (spread/2 + slip) * direction
+
+        sl = entry * (1 - risk * direction)
+        tp = entry * (1 + risk * rr * direction)
+
+        end = min(i + max_hold, len(df) - 1)
+        result = None
+
+        for j in range(i+1, end+1):
+            h, l = high[j], low[j]
+
+            if direction == 1:
+                hit_sl = l <= sl
+                hit_tp = h >= tp
+            else:
+                hit_sl = h >= sl
+                hit_tp = l <= tp
+
+            if hit_sl and hit_tp:
+                result = -risk
+                break
+            elif hit_sl:
+                result = -risk
+                break
+            elif hit_tp:
+                exit_price = tp - (spread/2 + slip) * direction
+                result = ((exit_price - entry) / entry) * direction
+                break
+
+        if result is None:
+            exit_price = close[end] - (spread/2 + slip) * direction
+            result = ((exit_price - entry) / entry) * direction
+
+        result -= (range_arr[i] / entry) * 0.05
+
+        trades.append(result)
+        fechas_trades.append(fechas[i])
+
+    if len(fechas_trades) > 0:
+        return pd.Series(trades, index=pd.DatetimeIndex(fechas_trades))
+    return pd.Series(dtype=float)
+
+# ======================================================
+# 📊 3. MÉTRICAS
+# ======================================================
+def metricas_avanzadas(trades):
+    if trades.empty:
+        return None
+
+    gains = trades[trades > 0]
+    losses = trades[trades < 0]
+
+    pf = abs(gains.sum() / losses.sum()) if losses.sum() != 0 else 0
+    wr = len(gains) / len(trades)
+
+    dd = (trades.cumsum() - trades.cumsum().cummax()).min()
+
+    return {
+        "trades": len(trades),
+        "pf": pf,
+        "wr": wr,
+        "dd": dd
+    }
+
+# ======================================================
+# 🧪 4. FILTRO ANTI-OVERFITTING
+# ======================================================
+def filtro_estrategia(m):
+    if m is None:
+        return False
+
+    if m["trades"] < CONFIG["min_trades"]:
+        return False
+
+    if m["pf"] < 1.15:
+        return False
+
+    if m["dd"] < -0.25:
+        return False
+
+    return True
+
+# ======================================================
+# 🎲 5. MONTE CARLO
+# ======================================================
+def monte_carlo(trades):
+    if len(trades) == 0:
+        return 0
+
+    vals = trades.values
+    results = []
+
+    for _ in range(CONFIG["n_montecarlo"]):
+        sample = np.random.choice(vals, size=len(vals), replace=True)
+        equity = np.cumsum(sample)
+        results.append(equity[-1])
+
+    results = np.array(results)
+    return (results > 0).mean()
+
+# ======================================================
+# 🔁 6. WALK FORWARD ROBUSTO
+# ======================================================
+def walk_forward(df):
+    step = len(df) // CONFIG["walk_forward_splits"]
+    all_trades = []
+
+    for i in range(CONFIG["walk_forward_splits"] - 1):
+        train = df.iloc[i*step:(i+1)*step]
+        test = df.iloc[(i+1)*step:(i+2)*step]
+
+        best_param = None
+        best_score = -np.inf
+
+        for mult in CONFIG["param_grid"]["mult"]:
+            trades = ejecutar_trades_fast(generar_senales(train.copy(), mult))
+            m = metricas_avanzadas(trades)
+
+            if not filtro_estrategia(m):
+                continue
+
+            mc = monte_carlo(trades)
+
+            score = (m["pf"] * 0.5) + (mc * 0.3) - (abs(m["dd"]) * 0.2)
+
+            if score > best_score:
+                best_score = score
+                best_param = mult
+
+        if best_param is not None:
+            trades_test = ejecutar_trades_fast(generar_senales(test.copy(), best_param))
+            if not trades_test.empty:
+                all_trades.append(trades_test)
+
+    if not all_trades:
+        return pd.Series(dtype=float)
+
+    return pd.concat(all_trades)
+
+# ======================================================
+# 🚀 7. VALIDACIÓN FINAL (OOS REAL)
+# ======================================================
+def run_backtest(df):
+
+    split = int(len(df) * 0.7)
+    df_dev = df.iloc[:split]
+    df_oos = df.iloc[split:]
+
+    print("⏳ Fase 1: Desarrollo...")
+    trades_dev = walk_forward(df_dev)
+
+    if trades_dev.empty:
+        print("❌ No pasó filtros en desarrollo")
+        return
+
+    print("⏳ Fase 2: Validación OOS...")
+    trades_oos = ejecutar_trades_fast(generar_senales(df_oos.copy()))
+
+    if trades_oos.empty:
+        print("❌ No hay trades en OOS")
+        return
+
+    m_dev = metricas_avanzadas(trades_dev)
+    m_oos = metricas_avanzadas(trades_oos)
+
+    print("\n=== RESULTADOS ===")
+    print("DEV:", m_dev)
+    print("OOS:", m_oos)
+
+    if m_oos["pf"] > 1.05 and m_oos["trades"] > 50:
+        print("✅ EDGE PROBABLE (sobrevive OOS)")
+    else:
+        print("❌ OVERFITTING DETECTADO")
