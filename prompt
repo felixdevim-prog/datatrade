@@ -18,12 +18,14 @@ CONFIG = {
 }
 
 # ======================================================
-# 🧠 1. GENERADOR DE SEÑALES (IA)
+# 🧠 1. GENERADOR DE SEÑALES (PEGAS AQUÍ LA IA)
 # ======================================================
 def generar_senales(df, mult=2.0):
 
     # --- INICIO IDEA SINTÉTICA ---
+    
     df['senial'] = 0
+    
     # --- FIN IDEA SINTÉTICA ---
 
     return df.copy()
@@ -52,6 +54,7 @@ def ejecutar_trades_fast(df):
     for i in idx_signals:
         direction = signal[i]
 
+        # Slippage dinámico
         slip = avg_range[i] * 0.1
         entry = close[i] + (spread/2 + slip) * direction
 
@@ -71,6 +74,7 @@ def ejecutar_trades_fast(df):
                 hit_sl = h >= sl
                 hit_tp = l <= tp
 
+            # Resolución conservadora
             if hit_sl and hit_tp:
                 result = -risk
                 break
@@ -82,10 +86,12 @@ def ejecutar_trades_fast(df):
                 result = ((exit_price - entry) / entry) * direction
                 break
 
+        # Salida por tiempo
         if result is None:
             exit_price = close[end] - (spread/2 + slip) * direction
             result = ((exit_price - entry) / entry) * direction
 
+        # Penalización microestructura
         result -= (range_arr[i] / entry) * 0.05
 
         trades.append(result)
@@ -96,7 +102,7 @@ def ejecutar_trades_fast(df):
     return pd.Series(dtype=float)
 
 # ======================================================
-# 📊 3. MÉTRICAS
+# 📊 3. MÉTRICAS SIMPLES Y ROBUSTAS
 # ======================================================
 def metricas_avanzadas(trades):
     if trades.empty:
@@ -108,7 +114,8 @@ def metricas_avanzadas(trades):
     pf = abs(gains.sum() / losses.sum()) if losses.sum() != 0 else 0
     wr = len(gains) / len(trades)
 
-    dd = (trades.cumsum() - trades.cumsum().cummax()).min()
+    equity = trades.cumsum()
+    dd = (equity - equity.cummax()).min()
 
     return {
         "trades": len(trades),
